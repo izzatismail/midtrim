@@ -1,6 +1,6 @@
 # TIMELINE.md — MVP Development Phases & Progress
 
-## 👉 Current Phase: Phase 1 — Project Setup & Foundations
+## 👉 Current Phase: Phase 2 — Domain Layer & Use Cases
 *(Update this pointer every time a phase's status changes. This is the first thing to check before starting any work.)*
 
 ## Overview
@@ -9,20 +9,20 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 ---
 
 ## Phase 1: Project Setup & Foundations
-**Status:** `Not Started` | **Current Progress:** 0%
+**Status:** `Complete` | **Current Progress:** 100%
 
 ### Deliverables
-- [ ] Repository initialized with monorepo structure (`ios/`, `android/`, `docs/`, `.github/workflows/`, `scripts/`) per ARCHITECTURE.md §1.1
-- [ ] GitHub Actions CI pipelines live (`android-ci.yml`, `ios-ci.yml`)
-  - [ ] Android: lint + format + unit tests passing
-  - [ ] iOS: lint + format + unit tests passing
-- [ ] Pre-commit hooks configured and tested locally on both platforms
-- [ ] `.gitignore` finalized (`.env`, build artifacts, IDE config, `.DS_Store`, etc.)
-- [ ] Base Gradle project structure (Android) with placeholder app
-- [ ] Base Xcode project structure (iOS) with placeholder app
-- [ ] Android: Room DB schema (Project + SourceVideoItem entities) created, DAO stubs
-- [ ] iOS: SwiftData models (Project + SourceVideoItem) created, repository stubs
-- [ ] CI pipelines green on empty project (first merge to `main`)
+- [x] Repository initialized with monorepo structure (`ios/`, `android/`, `docs/`, `.github/workflows/`, `scripts/`) per ARCHITECTURE.md §1.1
+- [x] GitHub Actions CI pipelines live (`android-ci.yml`, `ios-ci.yml`)
+  - [x] Android: lint + format + unit tests passing
+  - [x] iOS: lint + format + unit tests passing
+- [x] Pre-commit hooks configured and tested locally on both platforms
+- [x] `.gitignore` finalized (`.env`, build artifacts, IDE config, `.DS_Store`, etc.)
+- [x] Base Gradle project structure (Android) with placeholder app
+- [x] Base Xcode project structure (iOS) with placeholder app
+- [x] Android: Room DB schema (Project + SourceVideoItem entities) created, DAO stubs
+- [x] iOS: SwiftData models (Project + SourceVideoItem) created, repository stubs
+- [x] CI pipelines green on empty project (first merge to `main`)
 
 ### Effort Estimate
 - Android: 1 week
@@ -415,7 +415,7 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 
 | Phase | Status | Progress | Next Gate |
 |-------|--------|----------|-----------|
-| 1. Setup | Not Started | 0% | CI green, first merge |
+| 1. Setup | Complete | 100% | CI green, first merge |
 | 2. Domain | Not Started | 0% | 100% tests, code review |
 | 3. Data | Not Started | 0% | Integration tests pass |
 | 4. UI | Not Started | 0% | Critical flow works |
@@ -469,5 +469,6 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 | # | Change | Phase(s) Affected |
 |---|--------|-------------------|
 | 1 | Created TIMELINE.md with 8 phases | All |
+| 2 | Phase 1 completed: repo structure, CI pipelines, linting configs, pre-commit hooks, .gitignore, data layer stubs | Phase 1 |
 
 *(Use a simple incrementing sequence number, not a calendar date, consistent with this document's no-fixed-dates approach. Append a new row for each material change to scope, gate criteria, or phase structure — not for routine checkbox/progress updates.)*

@@ -3,8 +3,21 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 56;
 	objects = {
+
+/* Begin PBXBuildFile section */
+		2E3124CC69D226751ABF39A2 /* MidTrimApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9212A0B40FB0C053721DF791 /* MidTrimApp.swift */; };
+		3E17784F35CD73DE71D0C847 /* ProjectRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B56862527A5DE7C2747F97 /* ProjectRepositoryProtocol.swift */; };
+		40381E6587286391C9BF691F /* MidTrimUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF09B315A53EB61234CC813 /* MidTrimUITestsLaunchTests.swift */; };
+		45CAEA6CFC4E1E54024426AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 106D2B321BD54CEFD61E17EB /* Assets.xcassets */; };
+		4B69F2712D9E15A6183AB8E2 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4ED1C2129D111160AB45770 /* Project.swift */; };
+		4E481994130BABB82E946136 /* MidTrimTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567588BDA5CC68E54A5B578E /* MidTrimTests.swift */; };
+		856C4755CF7D0C9AAD93BB4B /* SourceVideoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7D942E24B581DD040AB7B6 /* SourceVideoItem.swift */; };
+		8AE4F442DAF8FC5D14BAD22E /* SourceVideoItemRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E1CBCD4D1F55BC8321ED51 /* SourceVideoItemRepositoryProtocol.swift */; };
+		8C023B1CBBFC0392552F206C /* MidTrimUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FED68176EFCBC605EF503ED0 /* MidTrimUITests.swift */; };
+		AAD4F5B37B9809EE9F4E69DB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093B3257C30AB34AD47E14C3 /* ContentView.swift */; };
+/* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		A7BC12603010FB9300DD3606 /* PBXContainerItemProxy */ = {
@@ -24,28 +37,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		00B56862527A5DE7C2747F97 /* ProjectRepositoryProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProjectRepositoryProtocol.swift; sourceTree = "<group>"; };
+		093B3257C30AB34AD47E14C3 /* ContentView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		106D2B321BD54CEFD61E17EB /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1DF09B315A53EB61234CC813 /* MidTrimUITestsLaunchTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MidTrimUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		567588BDA5CC68E54A5B578E /* MidTrimTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MidTrimTests.swift; sourceTree = "<group>"; };
+		9212A0B40FB0C053721DF791 /* MidTrimApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MidTrimApp.swift; sourceTree = "<group>"; };
 		A7BC12523010FB9200DD3606 /* MidTrim.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MidTrim.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7BC125F3010FB9300DD3606 /* MidTrimTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MidTrimTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7BC12693010FB9300DD3606 /* MidTrimUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MidTrimUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7E1CBCD4D1F55BC8321ED51 /* SourceVideoItemRepositoryProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SourceVideoItemRepositoryProtocol.swift; sourceTree = "<group>"; };
+		E4ED1C2129D111160AB45770 /* Project.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		EA7D942E24B581DD040AB7B6 /* SourceVideoItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SourceVideoItem.swift; sourceTree = "<group>"; };
+		FED68176EFCBC605EF503ED0 /* MidTrimUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MidTrimUITests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		A7BC12543010FB9200DD3606 /* MidTrim */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = MidTrim;
-			sourceTree = "<group>";
-		};
-		A7BC12623010FB9300DD3606 /* MidTrimTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = MidTrimTests;
-			sourceTree = "<group>";
-		};
-		A7BC126C3010FB9300DD3606 /* MidTrimUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = MidTrimUITests;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		A7BC124F3010FB9200DD3606 /* Frameworks */ = {
@@ -72,12 +77,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3BA28B0B0A2F22FE1188AE9A /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				EA7D942E24B581DD040AB7B6 /* SourceVideoItem.swift */,
+				E4ED1C2129D111160AB45770 /* Project.swift */,
+				B7E1CBCD4D1F55BC8321ED51 /* SourceVideoItemRepositoryProtocol.swift */,
+				00B56862527A5DE7C2747F97 /* ProjectRepositoryProtocol.swift */,
+			);
+			name = Data;
+			path = Data;
+			sourceTree = "<group>";
+		};
+		4AF45AB6098A374AA7104AB1 /* MidTrimUITests */ = {
+			isa = PBXGroup;
+			children = (
+				1DF09B315A53EB61234CC813 /* MidTrimUITestsLaunchTests.swift */,
+				FED68176EFCBC605EF503ED0 /* MidTrimUITests.swift */,
+			);
+			name = MidTrimUITests;
+			path = MidTrimUITests;
+			sourceTree = "<group>";
+		};
+		998B32061E865772314E67D3 /* MidTrimTests */ = {
+			isa = PBXGroup;
+			children = (
+				567588BDA5CC68E54A5B578E /* MidTrimTests.swift */,
+			);
+			name = MidTrimTests;
+			path = MidTrimTests;
+			sourceTree = "<group>";
+		};
 		A7BC12493010FB9200DD3606 = {
 			isa = PBXGroup;
 			children = (
-				A7BC12543010FB9200DD3606 /* MidTrim */,
-				A7BC12623010FB9300DD3606 /* MidTrimTests */,
-				A7BC126C3010FB9300DD3606 /* MidTrimUITests */,
+				F0A4D28CA905DD154356ACCA /* MidTrim */,
+				998B32061E865772314E67D3 /* MidTrimTests */,
+				4AF45AB6098A374AA7104AB1 /* MidTrimUITests */,
 				A7BC12533010FB9200DD3606 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +126,18 @@
 				A7BC12693010FB9300DD3606 /* MidTrimUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		F0A4D28CA905DD154356ACCA /* MidTrim */ = {
+			isa = PBXGroup;
+			children = (
+				3BA28B0B0A2F22FE1188AE9A /* Data */,
+				9212A0B40FB0C053721DF791 /* MidTrimApp.swift */,
+				093B3257C30AB34AD47E14C3 /* ContentView.swift */,
+				106D2B321BD54CEFD61E17EB /* Assets.xcassets */,
+			);
+			name = MidTrim;
+			path = MidTrim;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -107,12 +155,7 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				A7BC12543010FB9200DD3606 /* MidTrim */,
-			);
 			name = MidTrim;
-			packageProductDependencies = (
-			);
 			productName = MidTrim;
 			productReference = A7BC12523010FB9200DD3606 /* MidTrim.app */;
 			productType = "com.apple.product-type.application";
@@ -130,12 +173,7 @@
 			dependencies = (
 				A7BC12613010FB9300DD3606 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				A7BC12623010FB9300DD3606 /* MidTrimTests */,
-			);
 			name = MidTrimTests;
-			packageProductDependencies = (
-			);
 			productName = MidTrimTests;
 			productReference = A7BC125F3010FB9300DD3606 /* MidTrimTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -153,12 +191,7 @@
 			dependencies = (
 				A7BC126B3010FB9300DD3606 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				A7BC126C3010FB9300DD3606 /* MidTrimUITests */,
-			);
 			name = MidTrimUITests;
-			packageProductDependencies = (
-			);
 			productName = MidTrimUITests;
 			productReference = A7BC12693010FB9300DD3606 /* MidTrimUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -194,8 +227,6 @@
 				Base,
 			);
 			mainGroup = A7BC12493010FB9200DD3606;
-			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
 			productRefGroup = A7BC12533010FB9200DD3606 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -212,6 +243,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45CAEA6CFC4E1E54024426AF /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +268,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E3124CC69D226751ABF39A2 /* MidTrimApp.swift in Sources */,
+				856C4755CF7D0C9AAD93BB4B /* SourceVideoItem.swift in Sources */,
+				4B69F2712D9E15A6183AB8E2 /* Project.swift in Sources */,
+				8AE4F442DAF8FC5D14BAD22E /* SourceVideoItemRepositoryProtocol.swift in Sources */,
+				3E17784F35CD73DE71D0C847 /* ProjectRepositoryProtocol.swift in Sources */,
+				AAD4F5B37B9809EE9F4E69DB /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +281,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E481994130BABB82E946136 /* MidTrimTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,6 +289,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40381E6587286391C9BF691F /* MidTrimUITestsLaunchTests.swift in Sources */,
+				8C023B1CBBFC0392552F206C /* MidTrimUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,7 +362,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -378,7 +419,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -391,9 +432,8 @@
 		A7BC12743010FB9300DD3606 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+			CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -410,8 +450,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.izzatismail.MidTrim;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
@@ -422,9 +461,8 @@
 		A7BC12753010FB9300DD3606 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+			CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -441,8 +479,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.izzatismail.MidTrim;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
@@ -457,12 +494,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.izzatismail.MidTrimTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
@@ -478,12 +515,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.izzatismail.MidTrimTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
@@ -502,7 +539,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.izzatismail.MidTrimUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
@@ -521,7 +558,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.izzatismail.MidTrimUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;

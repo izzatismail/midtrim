@@ -1,0 +1,37 @@
+# --- Environment ---
+.env
+.env.*.local
+
+# --- iOS / Xcode ---
+ios/**/DerivedData/
+ios/**/*.xcuserdata
+ios/**/*.xcworkspace/xcuserdata
+ios/**/*.xctestplan
+ios/**/*.xcconfig
+
+# --- Android ---
+android/local.properties
+android/.gradle/
+android/build/
+android/app/build/
+android/.cxx/
+android/captures/
+
+# --- IDE ---
+.idea/
+*.iml
+.vscode/
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+# --- Build Artifacts ---
+*.apk
+*.aab
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# --- Misc ---
+*.log

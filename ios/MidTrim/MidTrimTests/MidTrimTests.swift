@@ -1,19 +1,8 @@
-//
-//  MidTrimTests.swift
-//  MidTrimTests
-//
-//  Created by Mohd Izzat Ismail Hashim on 22/07/2026.
-//
-
-import Testing
+import XCTest
 @testable import MidTrim
 
-struct MidTrimTests {
-
-    @Test func example() async throws {
-        // Write your test here and use APIs like `#expect(...)` to check expected conditions.
-        // Swift Testing Documentation
-        // https://developer.apple.com/documentation/testing
+final class MidTrimTests: XCTestCase {
+    func testExample() {
+        XCTAssertEqual(2 + 2, 4)
     }
-
 }

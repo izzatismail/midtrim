@@ -1,0 +1,20 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background: rounded square, off-white per DESIGN.md's "never pure white" rule,
+       inverted treatment — light background, dark mark, for a lighter app-icon feel -->
+  <rect width="512" height="512" rx="112" fill="#FAFAFA"/>
+
+  <!-- Thin, minimal crop marks, smaller footprint, more whitespace -->
+  <g stroke="#18181B" stroke-width="16" stroke-linecap="round" fill="none">
+    <path d="M 188 160 L 160 160 L 160 188"/>
+    <path d="M 324 160 L 352 160 L 352 188"/>
+    <path d="M 160 324 L 160 352 L 188 352"/>
+    <path d="M 352 324 L 352 352 L 324 352"/>
+  </g>
+
+  <!-- Smaller, indigo-filled play triangle -->
+  <path d="M 236 210 L 236 302 L 312 256 Z"
+        fill="#5B5FEF"
+        stroke="#5B5FEF"
+        stroke-width="10"
+        stroke-linejoin="round"/>
+</svg>

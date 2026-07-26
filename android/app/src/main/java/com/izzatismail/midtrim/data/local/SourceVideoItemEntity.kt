@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import java.util.UUID
 
 @Entity(
     tableName = "source_video_items",
@@ -15,15 +16,15 @@ import androidx.room.PrimaryKey
             onDelete = ForeignKey.CASCADE
         )
     ],
-    indices = [Index("projectId")]
+    indices = [Index(value = ["projectId", "orderIndex"])]
 )
 data class SourceVideoItemEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Long = 0,
-    val projectId: Long,
-    val sourceUri: String,
+    @PrimaryKey val id: String = UUID.randomUUID().toString(),
+    val projectId: String,
+    val sourceVideoUri: String,
+    val sourceVideoDuration: Double,
+    val sourceFileSize: Long?,
     val orderIndex: Int,
-    val durationMs: Long,
-    val fileSize: Long,
-    val resolution: String
+    val trimStartTime: Double,
+    val trimEndTime: Double
 )

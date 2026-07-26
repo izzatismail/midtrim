@@ -2,16 +2,19 @@ package com.izzatismail.midtrim.data.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.UUID
 
 @Entity(tableName = "projects")
 data class ProjectEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Long = 0,
+    @PrimaryKey val id: String = UUID.randomUUID().toString(),
     val name: String,
     val trimDuration: Double,
     val wasCustomDuration: Boolean,
+    val outputVideoUri: String,
+    val thumbnailUri: String,
     val exportQualityTier: String,
+    val mergedDuration: Double,
+    val videoCount: Int,
     val createdAt: Long,
-    val outputVideoPath: String?,
-    val thumbnailPath: String?
+    val updatedAt: Long
 )

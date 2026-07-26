@@ -3,25 +3,30 @@ import SwiftData
 
 @Model
 final class SourceVideoItem {
-    var sourceUri: String
+    @Attribute(.unique) var id: UUID
+    var sourceVideoURI: String
+    var sourceVideoDuration: Double
+    var sourceFileSize: Int64?
     var orderIndex: Int
-    var durationMs: Int64
-    var fileSize: Int64
-    var resolution: String
-
+    var trimStartTime: Double
+    var trimEndTime: Double
     var project: Project?
 
     init(
-        sourceUri: String,
+        id: UUID = UUID(),
+        sourceVideoURI: String,
+        sourceVideoDuration: Double,
+        sourceFileSize: Int64? = nil,
         orderIndex: Int,
-        durationMs: Int64,
-        fileSize: Int64,
-        resolution: String
+        trimStartTime: Double,
+        trimEndTime: Double
     ) {
-        self.sourceUri = sourceUri
+        self.id = id
+        self.sourceVideoURI = sourceVideoURI
+        self.sourceVideoDuration = sourceVideoDuration
+        self.sourceFileSize = sourceFileSize
         self.orderIndex = orderIndex
-        self.durationMs = durationMs
-        self.fileSize = fileSize
-        self.resolution = resolution
+        self.trimStartTime = trimStartTime
+        self.trimEndTime = trimEndTime
     }
 }

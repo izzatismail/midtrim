@@ -69,6 +69,8 @@ Represents the locally-cached record of whether the one-time in-app purchase has
 
 ## 3. Platform Implementation
 
+**ID type difference**: iOS uses the native `UUID` type for all entity IDs; Android uses `String` (UUID strings via `UUID.randomUUID().toString()`). This is a platform-idiomatic choice — there is no cross-platform data sharing, so no conversion is needed. Both types provide uniqueness and are safe for the lifetime of a project.
+
 ### 3.1 iOS — SwiftData Example
 ```swift
 import SwiftData

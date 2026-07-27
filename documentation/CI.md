@@ -185,6 +185,7 @@ To enforce RULES.md §6 at the platform level, configure the following on the `m
 - **Require status checks to pass before merging**: both `Android CI` and `iOS CI` workflows (only the one(s) relevant to changed paths will run, but both must be green if both triggered).
 - **Require branches to be up to date before merging** — avoids merging stale branches that haven't accounted for recent `main` changes.
 - **Require conversation resolution before merging** (if using PR review comments).
+- **AI agents never merge**, regardless of these settings — this is enforced as an agent behavior rule (RULES.md §7.1), not just a GitHub permission. Branch protection settings above are a technical backstop; RULES.md §7 is the actual source of truth for the PR/review workflow AI agents must follow, including the Pre-PR Security Checklist (§7.2).
 
 ---
 

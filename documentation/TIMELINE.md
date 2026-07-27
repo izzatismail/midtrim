@@ -1,6 +1,6 @@
 # TIMELINE.md — MVP Development Phases & Progress
 
-## 👉 Current Phase: Phase 2 — Domain Layer & Use Cases
+## 👉 Current Phase: Phase 3 — Data Layer & Persistence
 *(Update this pointer every time a phase's status changes. This is the first thing to check before starting any work.)*
 
 ## Overview
@@ -43,41 +43,43 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 ---
 
 ## Phase 2: Domain Layer & Use Cases
-**Status:** `Not Started` | **Current Progress:** 0%
+**Status:** `Complete` | **Current Progress:** 100%
 
 ### Deliverables
-**All 15 Use Cases from ARCHITECTURE.md §4, per platform (Swift + Kotlin):**
+**All 16 Use Cases from ARCHITECTURE.md §4, per platform (Swift + Kotlin):**
 
-- [ ] **ImportVideosUseCase** — validate 1–10 (free) / 1–20 (paid) videos, extract metadata (duration, file size, resolution)
-  - [ ] Unit tests: happy path, unsupported format, exceeds tier cap, empty selection
-- [ ] **ReorderVideosUseCase** — drag-to-reorder state management (pure function)
-  - [ ] Unit tests: valid reorder, boundary cases (empty list, single item)
-- [ ] **CalculateTrimWindowUseCase** — pure: given duration + trim duration, return (start, end) centered
-  - [ ] Unit tests: valid trim, video = trim duration, video < trim duration, boundary edge cases
-- [ ] **CalculateMergedDurationUseCase** — pure: given trim duration + video count, return total duration
-  - [ ] Unit tests: 1 video, 10 videos, 20 videos, valid durations only
-- [ ] **ValidateTrimDurationUseCase** *(new — IAP-related)* — pure: given requested duration + entitlement status, return allowed/rejected
-  - [ ] Unit tests: free tier accepts 1/2/3 only, paid tier accepts 1.0–5.0, free tier rejects custom values, paid tier rejects >5.0
-- [ ] **TrimVideoUseCase** — native trim operation per video (AVFoundation / Media3), delegates to ValidateTrimDurationUseCase
-  - [ ] Unit tests: success, corrupted file, unsupported codec, file not found, rejected duration for current tier
-- [ ] **MergeVideoSegmentsUseCase** — concatenate trimmed segments, normalize resolution/frame rate, encode at resolved quality
-  - [ ] Unit tests: success, empty segment list, 1 segment, 20 segments, mismatched formats
-- [ ] **ResolveExportQualityUseCase** *(new — IAP-related)* — pure: given entitlement status + source resolution, return target export resolution
-  - [ ] Unit tests: free tier always caps at 720p, paid tier returns source resolution, paid tier never upscales beyond source
-- [ ] **SaveProjectUseCase** — persist project + SourceVideoItem rows to DB, including trimDuration/wasCustomDuration/exportQualityTier
-  - [ ] Unit tests: success, duplicate name, invalid project structure, correct quality tier recorded
-- [ ] **FetchProjectsUseCase** — retrieve all projects, sorted by createdAt descending
-  - [ ] Unit tests: empty DB, multiple projects, ordering
-- [ ] **DeleteProjectUseCase** — cascade delete project + output file (never source videos)
-  - [ ] Unit tests: success, file not found, DB cascade verified
-- [ ] **RenameProjectUseCase** — update project name
-  - [ ] Unit tests: success, empty name, duplicate name
-- [ ] **PurchaseEntitlementUseCase** *(new — IAP-related)* — initiate platform purchase flow, persist entitlement on success
-  - [ ] Unit tests (against mocked StoreKit/Play Billing client): successful purchase updates cache, cancellation surfaces non-error state, payment failure surfaces retryable error
-- [ ] **RestoreEntitlementUseCase** *(new — IAP-related)* — query platform purchase records, update cache if found; used by both auto-restore-on-launch and manual restore button
-  - [ ] Unit tests (against mocked client): purchase found updates cache, no purchase found leaves cache as default, network/store failure preserves existing cached entitlement (never silently downgrades)
-- [ ] **FetchEntitlementStatusUseCase** *(new — IAP-related)* — pure read of cached local entitlement state
-  - [ ] Unit tests: returns cached true/false correctly, does not trigger a live store query
+- [x] **ImportVideosUseCase** — validate 1–10 (free) / 1–20 (paid) videos, extract metadata (duration, file size, resolution)
+  - [x] Unit tests: happy path, unsupported format, exceeds tier cap, empty selection
+- [x] **ReorderVideosUseCase** — drag-to-reorder state management (pure function)
+  - [x] Unit tests: valid reorder, boundary cases (empty list, single item)
+- [x] **CalculateTrimWindowUseCase** — pure: given duration + trim duration, return (start, end) centered
+  - [x] Unit tests: valid trim, video = trim duration, video < trim duration, boundary edge cases
+- [x] **CalculateMergedDurationUseCase** — pure: given trim duration + video count, return total duration
+  - [x] Unit tests: 1 video, 10 videos, 20 videos, valid durations only
+- [x] **ValidateTrimDurationUseCase** *(new — IAP-related)* — pure: given requested duration + entitlement status, return allowed/rejected
+  - [x] Unit tests: free tier accepts 1/2/3 only, paid tier accepts 1.0–5.0, free tier rejects custom values, paid tier rejects >5.0
+- [x] **TrimVideoUseCase** — native trim operation per video (AVFoundation / Media3), delegates to ValidateTrimDurationUseCase
+  - [x] Unit tests: success, corrupted file, unsupported codec, file not found, rejected duration for current tier
+- [x] **MergeVideoSegmentsUseCase** — concatenate trimmed segments, normalize resolution/frame rate, encode at resolved quality
+  - [x] Unit tests: success, empty segment list, 1 segment, 20 segments, mismatched formats
+- [x] **ResolveExportQualityUseCase** *(new — IAP-related)* — pure: given entitlement status + source resolution, return target export resolution
+  - [x] Unit tests: free tier always caps at 720p, paid tier returns source resolution, paid tier never upscales beyond source
+- [x] **GenerateThumbnailUseCase** *(new — was missing from this checklist, now added)* — given the merged output video's URI, extract a single frame at t=0 and write it as a JPEG, returning the new file's URI (see ARCHITECTURE.md §5.2)
+  - [x] Unit tests: successful extraction produces a valid JPEG at the expected path, extraction failure causes the overall project-save to fail cleanly (no `Project` row persisted with a missing `thumbnailURI`)
+- [x] **SaveProjectUseCase** — persist project + SourceVideoItem rows to DB, including trimDuration/wasCustomDuration/exportQualityTier/**thumbnailURI**
+  - [x] Unit tests: success, duplicate name, invalid project structure, correct quality tier recorded
+- [x] **FetchProjectsUseCase** — retrieve all projects, sorted by createdAt descending
+  - [x] Unit tests: empty DB, multiple projects, ordering
+- [x] **DeleteProjectUseCase** — cascade delete project + output file (never source videos)
+  - [x] Unit tests: success, file not found, DB cascade verified
+- [x] **RenameProjectUseCase** — update project name
+  - [x] Unit tests: success, empty name, duplicate name
+- [x] **PurchaseEntitlementUseCase** *(new — IAP-related)* — initiate platform purchase flow, persist entitlement on success
+  - [x] Unit tests (against mocked StoreKit/Play Billing client): successful purchase updates cache, cancellation surfaces non-error state, payment failure surfaces retryable error
+- [x] **RestoreEntitlementUseCase** *(new — IAP-related)* — query platform purchase records, update cache if found; used by both auto-restore-on-launch and manual restore button
+  - [x] Unit tests (against mocked client): purchase found updates cache, no purchase found leaves cache as default, network/store failure preserves existing cached entitlement (never silently downgrades)
+- [x] **FetchEntitlementStatusUseCase** *(new — IAP-related)* — pure read of cached local entitlement state
+  - [x] Unit tests: returns cached true/false correctly, does not trigger a live store query
 
 ### Effort Estimate
 - Android: 3–4 weeks (increased from 2–3 to account for 5 additional IAP-related Use Cases)
@@ -416,7 +418,7 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 | Phase | Status | Progress | Next Gate |
 |-------|--------|----------|-----------|
 | 1. Setup | Complete | 100% | CI green, first merge |
-| 2. Domain | Not Started | 0% | 100% tests, code review |
+| 2. Domain | Complete | 100% | 100% tests, code review |
 | 3. Data | Not Started | 0% | Integration tests pass |
 | 4. UI | Not Started | 0% | Critical flow works |
 | 5. In-App Purchase & Entitlement | Not Started | 0% | Test purchase/restore unlocks features |
@@ -470,5 +472,6 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 |---|--------|-------------------|
 | 1 | Created TIMELINE.md with 8 phases | All |
 | 2 | Phase 1 completed: repo structure, CI pipelines, linting configs, pre-commit hooks, .gitignore, data layer stubs | Phase 1 |
+| 3 | Phase 2 completed: all 16 Use Cases implemented per platform (Swift + Kotlin), domain entities, error types, repository/processing/IAP protocols, and 100% unit test coverage for all Use Cases across both platforms. | Phase 2 |
 
 *(Use a simple incrementing sequence number, not a calendar date, consistent with this document's no-fixed-dates approach. Append a new row for each material change to scope, gate criteria, or phase structure — not for routine checkbox/progress updates.)*

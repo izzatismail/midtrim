@@ -187,7 +187,34 @@
 
 ---
 
-## 7. Things Agents Must NEVER Do (Summary Checklist)
+## 7. Pull Request Workflow & Code Review Rules for AI Agents
+
+### 7.1 PR Workflow (Single Source of Truth)
+- After completing work on a feature branch (all commits made, lint/format/tests passing locally per §6.4), the agent **pushes the branch and creates a PR targeting `main`**.
+- The agent **never merges** a PR under any circumstances, regardless of how the request is phrased ("PR", "MR", "merge request" — these all mean the same thing here; there is no separate approval-gated path for one term vs. another). A human always reviews and merges manually.
+- Before creating the PR, the agent runs through the **Pre-PR Security Checklist** (§7.2) and includes the results in the PR description. This is not optional and does not depend on whether the developer used a specific keyword to request it — it applies to every PR, every time.
+- If a Critical or High severity issue is found during the agent's own pre-PR check, the agent still creates the PR (so the developer can see the branch and findings) but clearly flags the severity in the PR description rather than silently fixing and re-checking on its own loop. Significant fixes are a developer decision, not something the agent resolves unilaterally before the human ever sees the issue.
+
+### 7.2 Pre-PR Security Checklist
+Before opening a PR, the agent must explicitly verify and report on each of the following in the PR description (not just "no security issues found" — each item below, confirmed or flagged):
+- [ ] No networking code was added outside the StoreKit 2 / Play Billing IAP flow (§2.1).
+- [ ] No custom/third-party backend is touched for purchase verification — entitlement is derived only from StoreKit 2 / Play Billing (§2.6).
+- [ ] The entitlement cache is only written by `PurchaseEntitlementUseCase` or `RestoreEntitlementUseCase` — no other code path sets `isPurchased` (§2.6).
+- [ ] No plaintext storage of entitlement, purchase, or video file data — Keychain/`EncryptedSharedPreferences` for entitlement, `NSFileProtectionComplete`/`EncryptedFile` for video files (§2.2, §2.6).
+- [ ] No sensitive file paths, user data, or purchase/transaction details are logged in a way that could appear in release build logs (§2.2, §2.6).
+- [ ] No `.env` file, API key, signing certificate, keystore, or other secret is committed to the branch (§6.3).
+- [ ] A failed/timed-out restore check does not silently clear or downgrade cached entitlement (§2.6).
+
+### 7.3 Code Review Guide — Authority Limits
+When acting as a reviewing agent (whether reviewing another agent's commit or responding to an explicit "review my code" request):
+- The agent's output is a **report of findings only** — Critical/High/Medium/Low, per finding, with location, rationale, and suggested fix.
+- The agent **never** merges the PR under review, and **never** pushes a fix directly to the branch under review on its own initiative — even for a Critical finding. If a fix seems obvious and safe, the agent may propose it in the review comments, but implementing it is a separate, explicitly-requested action, not an automatic follow-up to a review.
+- The security dimension of any code review must explicitly check against the **Pre-PR Security Checklist** (§7.2) above, not just a generic "look for security issues" pass — this app's security surface is small and well-defined (encryption at rest, entitlement handling, the offline-only boundary), and the review should verify against these specific items every time.
+- The review must also check for accidentally committed secrets (API keys, signing certificates, keystores) as its own explicit item — not left to be caught incidentally under a general security label.
+
+---
+
+## 8. Things Agents Must NEVER Do (Summary Checklist)
 
 - ❌ Never add networking/analytics/telemetry code.
 - ❌ Never overwrite or modify the original source video(s).
@@ -217,8 +244,11 @@
 - ❌ Never let a failed or timed-out restore check silently clear or downgrade a cached entitlement.
 - ❌ Never write to the entitlement cache from anywhere other than `PurchaseEntitlementUseCase` or `RestoreEntitlementUseCase`.
 - ❌ Never retroactively change an already-saved project's `exportQualityTier`, `trimDuration`, or `videoCount` after a later purchase **or refund** — existing projects are permanent historical records, not re-processed in either direction.
+- ❌ Never merge a PR — a human always reviews and merges manually, regardless of how the request is phrased ("PR" or "MR").
+- ❌ Never push a fix directly to a branch under review as an automatic follow-up to a code review — a review is a report of findings, not authorization to implement changes.
+- ❌ Never satisfy the Pre-PR Security Checklist (§7.2) with a generic "no issues found" — each item must be explicitly checked and reported.
 
-## 8. Things Agents Must ALWAYS Do (Summary Checklist)
+## 9. Things Agents Must ALWAYS Do (Summary Checklist)
 
 - ✅ Always validate inputs at the domain layer, not just the UI layer.
 - ✅ Always follow SOLID principles as detailed in Section 1.
@@ -234,3 +264,5 @@
 - ✅ Always update TIMELINE.md after passing lint/format + unit tests to reflect progress.
 - ✅ Always derive tier limits (video cap, trim range, export quality) from `FetchEntitlementStatusUseCase`'s current cached value, never a stale or assumed state.
 - ✅ Always show locked free-tier controls as disabled-with-lock-icon rather than hidden, per the inline paywall pattern (DESIGN.md §6.2/§6.3).
+- ✅ Always run through the Pre-PR Security Checklist (§7.2) before opening a PR, and include the results in the PR description.
+- ✅ Always push completed work as a PR targeting `main` and stop there — a human reviews and merges.

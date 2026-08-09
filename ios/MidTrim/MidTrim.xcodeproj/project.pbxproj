@@ -55,6 +55,14 @@
 		F8C41A27CBFD2173E5EDD0E6 /* ResolveExportQualityUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772961EEE79EC6337393A590 /* ResolveExportQualityUseCaseTests.swift */; };
 		FBEAB03C58D8E0DFA5D3F85F /* ValidateTrimDurationUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5CABDE805114D0FE3DFD8F /* ValidateTrimDurationUseCaseTests.swift */; };
 		FCFEBD2DFA7B1F3039C7C69F /* DomainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B8FAEAEA2537D8D5F48C02 /* DomainError.swift */; };
+		E109137C9C2F3F9BC6EFFB9C /* ModelMappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43402BF7C422B12F8084D444 /* ModelMappers.swift */; };
+		7CAAF648B9A07683984F5E82 /* SwiftDataProjectRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABB0FD02F795F5CFB9D423B /* SwiftDataProjectRepository.swift */; };
+		3EB84D4F743F1B8752DD75FC /* DefaultVideoFileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EFBECAEBD09C9FB99B13EF /* DefaultVideoFileRepository.swift */; };
+		C12BD03E3AB495C6194F9B01 /* KeychainEntitlementCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980F90344D511D20F919AF31 /* KeychainEntitlementCache.swift */; };
+		DD45AF0FF18D4ABB7C16E19B /* ModelMappersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CB264E0812CEF252D4B588 /* ModelMappersTests.swift */; };
+		120FB654C02CD31B422AD7B2 /* SwiftDataProjectRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF5996598E7FE78D4D2DE1E /* SwiftDataProjectRepositoryTests.swift */; };
+		8AE3736FB2F7F69C6CDAA989 /* DefaultVideoFileRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEABDCFD6C4CA0573B7C028E /* DefaultVideoFileRepositoryTests.swift */; };
+		332990B8391054ECFF7C2C1F /* KeychainEntitlementCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71F9136ABAF03E4D240869F /* KeychainEntitlementCacheTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +136,14 @@
 		F474DD0259790635007426B5 /* PurchaseEntitlementUseCase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PurchaseEntitlementUseCase.swift; path = MidTrim/Domain/UseCases/PurchaseEntitlementUseCase.swift; sourceTree = "<group>"; };
 		FDB3D6A28101181DE584F8C2 /* ReorderVideosUseCaseTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReorderVideosUseCaseTests.swift; path = MidTrimTests/Domain/UseCases/ReorderVideosUseCaseTests.swift; sourceTree = "<group>"; };
 		FED68176EFCBC605EF503ED0 /* MidTrimUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MidTrimUITests.swift; sourceTree = "<group>"; };
+		43402BF7C422B12F8084D444 /* ModelMappers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ModelMappers.swift; path = MidTrim/Data/ModelMappers.swift; sourceTree = "<group>"; };
+		FABB0FD02F795F5CFB9D423B /* SwiftDataProjectRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftDataProjectRepository.swift; path = MidTrim/Data/Repositories/SwiftDataProjectRepository.swift; sourceTree = "<group>"; };
+		D4EFBECAEBD09C9FB99B13EF /* DefaultVideoFileRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DefaultVideoFileRepository.swift; path = MidTrim/Data/Repositories/DefaultVideoFileRepository.swift; sourceTree = "<group>"; };
+		980F90344D511D20F919AF31 /* KeychainEntitlementCache.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeychainEntitlementCache.swift; path = MidTrim/Data/Repositories/KeychainEntitlementCache.swift; sourceTree = "<group>"; };
+		99CB264E0812CEF252D4B588 /* ModelMappersTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ModelMappersTests.swift; path = MidTrimTests/Data/ModelMappersTests.swift; sourceTree = "<group>"; };
+		DBF5996598E7FE78D4D2DE1E /* SwiftDataProjectRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftDataProjectRepositoryTests.swift; path = MidTrimTests/Data/SwiftDataProjectRepositoryTests.swift; sourceTree = "<group>"; };
+		BEABDCFD6C4CA0573B7C028E /* DefaultVideoFileRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DefaultVideoFileRepositoryTests.swift; path = MidTrimTests/Data/DefaultVideoFileRepositoryTests.swift; sourceTree = "<group>"; };
+		F71F9136ABAF03E4D240869F /* KeychainEntitlementCacheTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeychainEntitlementCacheTests.swift; path = MidTrimTests/Data/KeychainEntitlementCacheTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +209,14 @@
 				998B32061E865772314E67D3 /* MidTrimTests */,
 				4AF45AB6098A374AA7104AB1 /* MidTrimUITests */,
 				A7BC12533010FB9200DD3606 /* Products */,
+				43402BF7C422B12F8084D444 /* ModelMappers.swift */,
+				FABB0FD02F795F5CFB9D423B /* SwiftDataProjectRepository.swift */,
+				D4EFBECAEBD09C9FB99B13EF /* DefaultVideoFileRepository.swift */,
+				980F90344D511D20F919AF31 /* KeychainEntitlementCache.swift */,
+				99CB264E0812CEF252D4B588 /* ModelMappersTests.swift */,
+				DBF5996598E7FE78D4D2DE1E /* SwiftDataProjectRepositoryTests.swift */,
+				BEABDCFD6C4CA0573B7C028E /* DefaultVideoFileRepositoryTests.swift */,
+				F71F9136ABAF03E4D240869F /* KeychainEntitlementCacheTests.swift */,
 				A5B8FAEAEA2537D8D5F48C02 /* DomainError.swift */,
 				7973C2A7FBFB55B216632ED2 /* EntitlementCacheProtocol.swift */,
 				6D3C53479BA39F7F87F7BEBB /* CalculateTrimWindowUseCase.swift */,

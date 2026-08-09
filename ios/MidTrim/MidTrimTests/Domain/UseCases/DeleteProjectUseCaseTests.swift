@@ -41,6 +41,25 @@ final class MockVideoFileRepository: VideoFileRepositoryProtocol {
         self.shouldThrow = shouldThrow
     }
 
+    func saveOutputVideo(from sourceUri: String, targetFileName: String) async throws -> String {
+        if shouldThrow { throw NSError(domain: "test", code: 1) }
+        return "/dev/null/\(targetFileName)"
+    }
+
+    func createDecryptedCopyForShare(uri: String) async throws -> String {
+        if shouldThrow { throw NSError(domain: "test", code: 1) }
+        return "/dev/null/share_copy.mp4"
+    }
+
+    func createTempSegmentDir() async throws -> String {
+        if shouldThrow { throw NSError(domain: "test", code: 1) }
+        return "/dev/null/temp_segments"
+    }
+
+    func cleanupTempSegments(dir: String) async throws {
+        if shouldThrow { throw NSError(domain: "test", code: 1) }
+    }
+
     func deleteOutputVideo(at uri: String) async throws {
         didDeleteVideo = true
         if shouldThrow { throw NSError(domain: "test", code: 1) }

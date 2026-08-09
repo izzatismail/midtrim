@@ -126,6 +126,25 @@ class FakeVideoFileRepository(private val shouldThrow: Boolean = false) : VideoF
     var didDeleteVideo = false
     var didDeleteThumbnail = false
 
+    override suspend fun saveOutputVideo(sourceUri: String, targetFileName: String): String {
+        if (shouldThrow) throw Exception("Mock failure")
+        return "/dev/null/$targetFileName"
+    }
+
+    override suspend fun createDecryptedCopyForShare(uri: String): String {
+        if (shouldThrow) throw Exception("Mock failure")
+        return "/dev/null/share_copy.mp4"
+    }
+
+    override suspend fun createTempSegmentDir(): String {
+        if (shouldThrow) throw Exception("Mock failure")
+        return "/dev/null/temp_segments"
+    }
+
+    override suspend fun cleanupTempSegments(dir: String) {
+        if (shouldThrow) throw Exception("Mock failure")
+    }
+
     override suspend fun deleteOutputVideo(uri: String) {
         didDeleteVideo = true
         if (shouldThrow) throw Exception("Mock failure")

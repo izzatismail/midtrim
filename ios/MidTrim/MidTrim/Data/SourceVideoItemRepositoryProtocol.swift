@@ -1,7 +1,3 @@
-import Foundation
-
-protocol SourceVideoItemRepositoryProtocol {
-    func fetchSourceVideoItems(for projectId: String) async throws -> [SourceVideoItem]
-    func saveSourceVideoItems(_ items: [SourceVideoItem]) async throws
-    func deleteSourceVideoItems(for projectId: String) async throws
-}
+// MARK: - Deprecated
+// Use Domain/Protocols/ProjectRepositoryProtocol instead.
+// This file will be removed once all consumers are migrated.

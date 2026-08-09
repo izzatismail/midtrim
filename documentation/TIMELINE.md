@@ -101,36 +101,45 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 ---
 
 ## Phase 3: Data Layer & Persistence
-**Status:** `Not Started` | **Current Progress:** 0%
+**Status:** `In Progress` | **Current Progress:** 75%
 
 ### Deliverables
 
 **Android:**
-- [ ] Room Database setup + initialization
-- [ ] ProjectEntity and SourceVideoItemEntity fully defined with cascade delete rules (including `trimDuration` as Double, `wasCustomDuration`, `exportQualityTier` fields per SCHEMA.md §2.1)
-- [ ] ProjectDao (CRUD, fetch by ID, sorted queries)
-- [ ] SourceVideoItemDao (CRUD, fetch by projectId in order)
-- [ ] Room Migrations (if schema evolves; v1 may be only migration)
-- [ ] ProjectRepository implementation (interface + concrete)
-- [ ] VideoFileRepository implementation (encrypt output, decrypt on share, manage temp trim segments)
-- [ ] **EntitlementCache implementation via `EncryptedSharedPreferences`** (not Room) per SCHEMA.md §2.3 — read/write `isPurchased`, `productId`, `lastVerifiedAt`
-- [ ] In-memory DB tests: insert, update, delete, cascade delete, ordering
-- [ ] Entitlement cache tests: read/write against a fake `EncryptedSharedPreferences` instance
+- [x] Room Database setup + initialization (AppDatabase.kt created)
+- [x] ProjectEntity and SourceVideoItemEntity fully defined with cascade delete rules
+- [x] ProjectDao (CRUD, fetch by ID, sorted queries)
+- [x] SourceVideoItemDao (CRUD, fetch by projectId in order)
+- [ ] Room Migrations (v1 baseline confirmed — no migration needed per SCHEMA.md §6)
+- [x] ProjectRepository implementation (ProjectRepositoryImpl via Room)
+- [x] VideoFileRepository implementation (protocol extended with save/create/cleanup methods; encrypt/decrypt/temp-segment handling)
+- [x] **EntitlementCache implementation via `EncryptedSharedPreferences`** (not Room) per SCHEMA.md §2.3 — read/write `isPurchased`, `productId`, `lastVerifiedAt`
+- [x] **Entity ↔ Domain mappers** (EntityMappers.kt with round-trip conversion)
+- [x] **androidx.security-crypto dependency added**
+- [x] **Test-time DI wiring — androidTest directory with in-memory DB tests**
+- [x] In-memory DB tests: insert, update, delete, cascade delete, ordering
+- [x] Entitlement cache tests: read/write against a real `EncryptedSharedPreferences` instance
+- [x] Mapper correctness tests: round-trip conversion for both entities
 
 **iOS:**
-- [ ] SwiftData models (Project + SourceVideoItem) with cascade delete rules (including `trimDuration` as Double, `wasCustomDuration`, `exportQualityTier` fields per SCHEMA.md §2.1)
-- [ ] ProjectRepository implementation (interface + concrete)
-- [ ] VideoFileRepository implementation (file encryption, decryption, temp cleanup)
-- [ ] **EntitlementCache implementation via Keychain** (not SwiftData) per SCHEMA.md §2.3 — read/write `isPurchased`, `productId`, `lastVerifiedAt`
-- [ ] In-memory SwiftData tests: insert, update, delete, cascade delete, ordering
-- [ ] Entitlement cache tests: read/write against a fake Keychain wrapper
+- [x] SwiftData models (Project + SourceVideoItem) with cascade delete rules
+- [x] ModelContainer setup + configuration in MidTrimApp.swift
+- [x] ProjectRepository implementation (SwiftDataProjectRepository via SwiftData)
+- [x] VideoFileRepository implementation (protocol extended with save/create/cleanup methods; encrypt/decrypt/temp-segment handling via DefaultVideoFileRepository)
+- [x] **EntitlementCache implementation via Keychain** (not SwiftData) per SCHEMA.md §2.3 — read/write `isPurchased`, `productId`, `lastVerifiedAt`
+- [x] **Model ↔ Domain mappers** (ModelMappers.swift with round-trip conversion)
+- [x] **Stale Data/ protocol files deprecated**
+- [x] **Test-time DI wiring — in-memory ModelContainer tests**
+- [x] In-memory SwiftData tests: insert, update, delete, cascade delete, ordering
+- [x] Entitlement cache tests: read/write against a real Keychain wrapper
+- [x] Mapper correctness tests: round-trip conversion for both models
 
 **Both platforms:**
-- [ ] Verify encryption at rest: NSFileProtectionComplete (iOS) / EncryptedFile (Android) for video files; Keychain / EncryptedSharedPreferences for entitlement cache
-- [ ] Integration test: temp segment cleanup on merge failure
-- [ ] Integration test: source video files never modified/overwritten
-- [ ] Integration test: orphaned files never left on disk
-- [ ] Integration test: entitlement cache read/write survives app restart (persisted correctly)
+- [x] Verify encryption at rest: NSFileProtectionComplete (iOS) / EncryptedFile (Android) for video files; Keychain / EncryptedSharedPreferences for entitlement cache
+- [x] Entitlement cache read/write survives app restart (Android + iOS tests write → re-initialize → read back)
+- [ ] Integration test: temp segment cleanup on merge failure *(blocked on Phase 6 — trim/merge pipeline needed)*
+- [ ] Integration test: source video files never modified/overwritten *(blocked on Phase 6)*
+- [ ] Integration test: orphaned files never left on disk *(blocked on Phase 6)*
 
 ### Effort Estimate
 - Android: 2–3 weeks (entitlement cache work is small, doesn't meaningfully add to estimate)
@@ -148,7 +157,7 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 *Governing rules for this phase: RULES.md §2.2 (file & data security), §2.6 (IAP/entitlement security), §4 (data & storage rules).*
 
 ### Blockers / Notes
-- (None yet)
+- Temp segment cleanup, source-file-immutability, and orphan-file tests deferred to Phase 6 — they require a running trim/merge pipeline to produce the conditions they verify.
 
 ---
 
@@ -419,7 +428,7 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 |-------|--------|----------|-----------|
 | 1. Setup | Complete | 100% | CI green, first merge |
 | 2. Domain | Complete | 100% | 100% tests, code review |
-| 3. Data | Not Started | 0% | Integration tests pass |
+| 3. Data | In Progress | 75% | Integration tests pass; 3 items blocked on Phase 6 |
 | 4. UI | Not Started | 0% | Critical flow works |
 | 5. In-App Purchase & Entitlement | Not Started | 0% | Test purchase/restore unlocks features |
 | 6. Video Processing | Not Started | 0% | Playable output, perf OK, quality tiers verified |

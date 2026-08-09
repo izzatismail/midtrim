@@ -1,9 +1,3 @@
-import Foundation
-
-protocol ProjectRepositoryProtocol {
-    func fetchAllProjects() async throws -> [Project]
-    func fetchProject(by id: String) async throws -> Project?
-    func save(project: Project) async throws
-    func delete(project: Project) async throws
-    func rename(project: Project, to name: String) async throws
-}
+// MARK: - Deprecated
+// Use Domain/Protocols/ProjectRepositoryProtocol instead.
+// This file will be removed once all consumers are migrated.

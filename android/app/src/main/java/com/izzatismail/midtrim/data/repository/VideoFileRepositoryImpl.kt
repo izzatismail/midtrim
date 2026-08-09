@@ -1,12 +1,14 @@
 package com.izzatismail.midtrim.data.repository
 
 import android.content.Context
+import android.net.Uri
 import androidx.security.crypto.EncryptedFile
 import androidx.security.crypto.MasterKey
 import com.izzatismail.midtrim.domain.repository.VideoFileRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.InputStream
 
 class VideoFileRepositoryImpl(
     private val context: Context
@@ -25,14 +27,23 @@ class VideoFileRepositoryImpl(
                 masterKey,
                 EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
             ).build().openFileOutput().use { encryptedStream ->
-                val sourceFile = File(sourceUri)
-                sourceFile.inputStream().use { input ->
+                openSourceStream(sourceUri).use { input ->
                     input.copyTo(encryptedStream)
                 }
             }
 
             outputFile.absolutePath
         }
+
+    private fun openSourceStream(sourceUri: String): InputStream {
+        val uri = Uri.parse(sourceUri)
+        return if (uri.scheme == "content") {
+            context.contentResolver.openInputStream(uri)
+                ?: throw IllegalArgumentException("Cannot open content URI: $sourceUri")
+        } else {
+            File(sourceUri).inputStream()
+        }
+    }
 
     override suspend fun createDecryptedCopyForShare(uri: String): String =
         withContext(Dispatchers.IO) {

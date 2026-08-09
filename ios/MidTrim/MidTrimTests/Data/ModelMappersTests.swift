@@ -58,7 +58,7 @@ final class ModelMappersTests: XCTestCase {
         )
         model.project = project
         let domain = model.toDomain()
-        let backToModel = domain.toModel()
+        let backToModel = domain.toModel(with: project)
 
         XCTAssertEqual(model.id, backToModel.id)
         XCTAssertEqual(model.sourceVideoURI, backToModel.sourceVideoURI)
@@ -79,8 +79,14 @@ final class ModelMappersTests: XCTestCase {
             trimStartTime: 1.0,
             trimEndTime: 4.0
         )
+        let dummyProject = Project(
+            id: UUID(), name: "Dummy", trimDuration: 3.0,
+            wasCustomDuration: false, outputVideoURI: "o.mp4",
+            thumbnailURI: "t.jpg", exportQualityTier: "free_720p",
+            mergedDuration: 3.0, videoCount: 1
+        )
         let domain = model.toDomain()
-        let backToModel = domain.toModel()
+        let backToModel = domain.toModel(with: dummyProject)
         XCTAssertNil(backToModel.sourceFileSize)
     }
 

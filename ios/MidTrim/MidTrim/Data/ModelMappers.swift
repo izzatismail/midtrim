@@ -52,8 +52,8 @@ extension SourceVideoItem {
 }
 
 extension SourceVideoInfo {
-    func toModel() -> SourceVideoItem {
-        SourceVideoItem(
+    func toModel(with project: Project) -> SourceVideoItem {
+        let model = SourceVideoItem(
             id: id,
             sourceVideoURI: sourceVideoURI,
             sourceVideoDuration: sourceVideoDuration,
@@ -62,5 +62,7 @@ extension SourceVideoInfo {
             trimStartTime: trimStartTime,
             trimEndTime: trimEndTime
         )
+        model.project = project
+        return model
     }
 }

@@ -29,8 +29,7 @@ final class SwiftDataProjectRepository: ProjectRepositoryProtocol {
         let model = project.toModel()
         modelContext.insert(model)
         for videoInfo in sourceVideos {
-            let videoModel = videoInfo.toModel()
-            videoModel.project = model
+            let videoModel = videoInfo.toModel(with: model)
             modelContext.insert(videoModel)
         }
         try modelContext.save()

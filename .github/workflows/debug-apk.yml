@@ -1,0 +1,67 @@
+name: Debug APK
+
+on:
+  push:
+    branches: ["main"]
+    paths: ["android/**"]
+
+concurrency:
+  group: main-debug-apk
+  cancel-in-progress: true
+
+jobs:
+  build-debug:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: android
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve JDK version from Gradle wrapper
+        id: jdk
+        run: |
+          GRADLE_VERSION=$(grep "^distributionUrl" gradle/wrapper/gradle-wrapper.properties \
+            | grep -oE "[0-9]+\.[0-9]+" | head -1)
+          MAJOR=${GRADLE_VERSION%%.*}
+          if [ "$MAJOR" -ge 9 ]; then echo "jdk=17" >> "$GITHUB_OUTPUT"
+          elif [ "$MAJOR" -ge 8 ]; then echo "jdk=17" >> "$GITHUB_OUTPUT"
+          elif [ "$MAJOR" -ge 7 ]; then echo "jdk=16" >> "$GITHUB_OUTPUT"
+          else echo "jdk=11" >> "$GITHUB_OUTPUT"; fi
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ steps.jdk.outputs.jdk }}
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug
+
+      - name: Locate APK
+        id: apk
+        working-directory: .
+        run: |
+          APK=$(find android -path "*/build/outputs/apk/debug/*.apk" -type f | head -1)
+          if [ -z "$APK" ]; then echo "error: no debug APK found"; exit 1; fi
+          echo "path=$APK" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: debug-apk-${{ github.sha }}
+          path: ${{ steps.apk.outputs.path }}
+          retention-days: 1
+
+      - name: Workflow Summary
+        if: success()
+        run: |
+          {
+            echo "## Debug APK Build"
+            echo ""
+            echo "| Item | Value |"
+            echo "|---|---|"
+            echo "| Commit | \`${{ github.sha }}\` |"
+            echo "| APK | \`${{ steps.apk.outputs.path }}\` |"
+            echo "| Download | [${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) |"
+          } >> "$GITHUB_STEP_SUMMARY"

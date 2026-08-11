@@ -89,7 +89,7 @@ struct MidTrimNavigation: View {
                 case .nameProject:
                     NameProjectScreen(
                         defaultName: "Trim Project",
-                        onSave: { path.removeAll() },
+                        onSave: { _ in path.removeAll() },
                         onDiscard: { path.removeAll() }
                     )
                 }

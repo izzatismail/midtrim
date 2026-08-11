@@ -1,12 +1,12 @@
 package com.izzatismail.midtrim.presentation.viewmodel
 
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.izzatismail.midtrim.domain.entity.ProjectInfo
 import com.izzatismail.midtrim.domain.usecase.DeleteProjectUseCase
 import com.izzatismail.midtrim.domain.usecase.FetchEntitlementStatusUseCase
 import com.izzatismail.midtrim.domain.usecase.FetchProjectsUseCase
 import com.izzatismail.midtrim.domain.usecase.RenameProjectUseCase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,14 +24,13 @@ class ProjectListViewModel(
     private val deleteProjectUseCase: DeleteProjectUseCase,
     private val renameProjectUseCase: RenameProjectUseCase,
     private val fetchEntitlementStatusUseCase: FetchEntitlementStatusUseCase
-) {
-    private val scope = CoroutineScope(Dispatchers.Main)
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ProjectListUiState())
     val uiState: StateFlow<ProjectListUiState> = _uiState.asStateFlow()
 
     fun loadProjects() {
-        scope.launch {
+        viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true)
             try {
                 val projects = fetchProjectsUseCase.execute()
@@ -51,7 +50,7 @@ class ProjectListViewModel(
     }
 
     fun deleteProject(project: ProjectInfo) {
-        scope.launch {
+        viewModelScope.launch {
             try {
                 deleteProjectUseCase.execute(project)
                 loadProjects()
@@ -64,7 +63,7 @@ class ProjectListViewModel(
     }
 
     fun renameProject(projectId: String, newName: String) {
-        scope.launch {
+        viewModelScope.launch {
             try {
                 renameProjectUseCase.execute(projectId, newName)
                 loadProjects()

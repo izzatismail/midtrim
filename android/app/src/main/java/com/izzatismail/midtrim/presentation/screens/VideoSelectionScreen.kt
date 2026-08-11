@@ -2,7 +2,7 @@ package com.izzatismail.midtrim.presentation.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.izzatismail.midtrim.domain.entity.VideoMetadata
-import com.izzatismail.midtrim.presentation.navigation.Spacing
+import com.izzatismail.midtrim.ui.theme.Spacing
 import com.izzatismail.midtrim.presentation.viewmodel.VideoSelectionUiState
 import com.izzatismail.midtrim.ui.theme.*
 
@@ -44,16 +44,17 @@ fun VideoSelectionScreen(
             modifier = modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(horizontal = Spacing.md.dp)
+                .padding(horizontal = Spacing.md)
         ) {
             if (uiState.selectedVideos.isEmpty()) {
                 EmptyVideoState(onAddVideos = onAddVideos)
             } else {
                 LazyColumn(
                     modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(Spacing.sm.dp)
+                    verticalArrangement = Arrangement.spacedBy(Spacing.sm)
                 ) {
-                    itemsIndexed(uiState.selectedVideos) { index, video ->
+                    items(uiState.selectedVideos, key = { it.uri }) { video ->
+                        val index = uiState.selectedVideos.indexOf(video)
                         VideoRow(
                             index = index,
                             video = video,
@@ -69,11 +70,11 @@ fun VideoSelectionScreen(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(Spacing.sm.dp))
+                Spacer(modifier = Modifier.height(Spacing.sm))
 
                 MergedDurationBanner(duration = uiState.mergedDuration)
 
-                Spacer(modifier = Modifier.height(Spacing.md.dp))
+                Spacer(modifier = Modifier.height(Spacing.md))
 
                 Button(
                     onClick = onContinue,
@@ -99,7 +100,7 @@ private fun EmptyVideoState(onAddVideos: () -> Unit) {
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        Spacer(modifier = Modifier.height(Spacing.md.dp))
+        Spacer(modifier = Modifier.height(Spacing.md))
         Button(onClick = onAddVideos) {
             Text("Add Videos")
         }
@@ -119,7 +120,7 @@ private fun VideoRow(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(Spacing.sm.dp),
+                .padding(Spacing.sm),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f)) {
@@ -151,7 +152,7 @@ private fun AddVideoButton(isAtCap: Boolean, onTap: () -> Unit) {
         color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
     ) {
         Row(
-            modifier = Modifier.padding(Spacing.md.dp),
+            modifier = Modifier.padding(Spacing.md),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
@@ -182,7 +183,7 @@ private fun MergedDurationBanner(duration: Double) {
             text = "Merged length: ${duration.toInt()}s",
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.padding(Spacing.sm.dp)
+            modifier = Modifier.padding(Spacing.sm)
         )
     }
 }

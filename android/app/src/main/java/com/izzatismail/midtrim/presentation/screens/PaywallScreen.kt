@@ -6,7 +6,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.izzatismail.midtrim.presentation.navigation.Spacing
+import com.izzatismail.midtrim.ui.theme.Spacing
 import com.izzatismail.midtrim.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -36,7 +36,7 @@ fun PaywallScreen(
             modifier = modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(horizontal = Spacing.md.dp),
+                .padding(horizontal = Spacing.md),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -46,15 +46,15 @@ fun PaywallScreen(
                 color = PremiumAccent
             )
 
-            Spacer(modifier = Modifier.height(Spacing.xl.dp))
+            Spacer(modifier = Modifier.height(Spacing.xl))
 
             BenefitRow(text = "Custom trim duration (1–5s)")
-            Spacer(modifier = Modifier.height(Spacing.md.dp))
+            Spacer(modifier = Modifier.height(Spacing.md))
             BenefitRow(text = "Full quality exports (up to 4K)")
-            Spacer(modifier = Modifier.height(Spacing.md.dp))
+            Spacer(modifier = Modifier.height(Spacing.md))
             BenefitRow(text = "Up to 20 videos per project")
 
-            Spacer(modifier = Modifier.height(Spacing.xl.dp))
+            Spacer(modifier = Modifier.height(Spacing.xl))
 
             Text(
                 text = "$5.00 — one-time purchase",
@@ -62,7 +62,7 @@ fun PaywallScreen(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
-            Spacer(modifier = Modifier.height(Spacing.lg.dp))
+            Spacer(modifier = Modifier.height(Spacing.lg))
 
             Button(
                 onClick = onPurchase,
@@ -83,14 +83,14 @@ fun PaywallScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(Spacing.sm.dp))
+            Spacer(modifier = Modifier.height(Spacing.sm))
 
             TextButton(onClick = onRestore) {
                 Text("Restore Purchases")
             }
 
             error?.let {
-                Spacer(modifier = Modifier.height(Spacing.sm.dp))
+                Spacer(modifier = Modifier.height(Spacing.sm))
                 Text(
                     text = it,
                     style = MaterialTheme.typography.bodySmall,
@@ -109,7 +109,7 @@ private fun BenefitRow(text: String) {
         color = MaterialTheme.colorScheme.surface
     ) {
         Row(
-            modifier = Modifier.padding(Spacing.md.dp),
+            modifier = Modifier.padding(Spacing.md),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -117,7 +117,7 @@ private fun BenefitRow(text: String) {
                 style = MaterialTheme.typography.bodyLarge,
                 color = PremiumAccent
             )
-            Spacer(modifier = Modifier.width(Spacing.sm.dp))
+            Spacer(modifier = Modifier.width(Spacing.sm))
             Text(
                 text = text,
                 style = MaterialTheme.typography.bodyLarge

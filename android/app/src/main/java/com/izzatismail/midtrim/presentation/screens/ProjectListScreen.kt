@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.izzatismail.midtrim.domain.entity.ProjectInfo
-import com.izzatismail.midtrim.presentation.navigation.Spacing
+import com.izzatismail.midtrim.ui.theme.Spacing
 import com.izzatismail.midtrim.presentation.viewmodel.ProjectListUiState
 import com.izzatismail.midtrim.ui.theme.*
 
@@ -77,8 +77,8 @@ fun ProjectListScreen(
                 else -> {
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(horizontal = Spacing.md.dp, vertical = Spacing.sm.dp),
-                        verticalArrangement = Arrangement.spacedBy(Spacing.sm.dp)
+                        contentPadding = PaddingValues(horizontal = Spacing.md, vertical = Spacing.sm),
+                        verticalArrangement = Arrangement.spacedBy(Spacing.sm)
                     ) {
                         items(uiState.projects, key = { it.id }) { project ->
                             ProjectCard(
@@ -100,13 +100,13 @@ private fun UpgradeBanner(onUpgrade: () -> Unit) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = Spacing.md.dp, vertical = Spacing.sm.dp)
+            .padding(horizontal = Spacing.md, vertical = Spacing.sm)
             .clickable(onClick = onUpgrade),
         color = PremiumAccent.copy(alpha = 0.15f),
-        shape = RoundedCornerShape(Spacing.cornerButton.dp)
+        shape = RoundedCornerShape(Spacing.cornerButton)
     ) {
         Row(
-            modifier = Modifier.padding(Spacing.md.dp),
+            modifier = Modifier.padding(Spacing.md),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -131,13 +131,13 @@ private fun EmptyState(onNewProject: () -> Unit) {
             style = MaterialTheme.typography.headlineLarge,
             color = MaterialTheme.colorScheme.onSurface
         )
-        Spacer(modifier = Modifier.height(Spacing.sm.dp))
+        Spacer(modifier = Modifier.height(Spacing.sm))
         Text(
             text = "Create your first trim",
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        Spacer(modifier = Modifier.height(Spacing.lg.dp))
+        Spacer(modifier = Modifier.height(Spacing.lg))
         Button(onClick = onNewProject) {
             Text("New Project")
         }
@@ -156,13 +156,13 @@ private fun ProjectCard(
     Card(
         onClick = onTap,
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(Spacing.cornerCard.dp),
+        shape = RoundedCornerShape(Spacing.cornerCard),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(Spacing.md.dp),
+                .padding(Spacing.md),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f)) {
@@ -172,7 +172,7 @@ private fun ProjectCard(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
-                Spacer(modifier = Modifier.height(Spacing.xs.dp))
+                Spacer(modifier = Modifier.height(Spacing.xs))
                 Text(
                     text = "${project.mergedDuration.toInt()}s · ${project.videoCount} videos",
                     style = MaterialTheme.typography.bodySmall,

@@ -1,14 +1,13 @@
 package com.izzatismail.midtrim.presentation.viewmodel
 
-import com.izzatismail.midtrim.domain.entity.ProjectInfo
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.izzatismail.midtrim.domain.entity.VideoMetadata
 import com.izzatismail.midtrim.domain.usecase.CalculateMergedDurationUseCase
 import com.izzatismail.midtrim.domain.usecase.FetchEntitlementStatusUseCase
 import com.izzatismail.midtrim.domain.usecase.ImportVideosUseCase
 import com.izzatismail.midtrim.domain.usecase.ReorderVideosUseCase
 import com.izzatismail.midtrim.domain.usecase.ValidateTrimDurationUseCase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -29,25 +28,29 @@ class VideoSelectionViewModel(
     private val calculateMergedDurationUseCase: CalculateMergedDurationUseCase,
     private val validateTrimDurationUseCase: ValidateTrimDurationUseCase,
     private val fetchEntitlementStatusUseCase: FetchEntitlementStatusUseCase
-) {
-    private val scope = CoroutineScope(Dispatchers.Main)
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(VideoSelectionUiState())
     val uiState: StateFlow<VideoSelectionUiState> = _uiState.asStateFlow()
 
+    private val existingUris: Set<String>
+        get() = _uiState.value.selectedVideos.map { it.uri }.toSet()
+
     fun initialize() {
-        scope.launch {
+        viewModelScope.launch {
             val isPaid = fetchEntitlementStatusUseCase.isPaidUser
             _uiState.value = _uiState.value.copy(isPaidUser = isPaid)
         }
     }
 
     fun importVideos(videoUris: List<String>) {
-        scope.launch {
+        viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true, importError = null)
             try {
                 val metadata = importVideosUseCase.execute(videoUris)
-                val all = _uiState.value.selectedVideos + metadata
+                val existing = existingUris
+                val newMetadata = metadata.filter { it.uri !in existing }
+                val all = _uiState.value.selectedVideos + newMetadata
                 val merged = calculateMergedDurationUseCase.execute(
                     _uiState.value.trimDuration, all.size
                 )

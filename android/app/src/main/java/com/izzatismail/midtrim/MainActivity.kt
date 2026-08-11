@@ -4,6 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -44,6 +50,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 private fun MidTrimApp() {
     val navController = rememberNavController()
+    var projectToRename by remember { mutableStateOf<ProjectInfo?>(null) }
+    var renameText by remember { mutableStateOf("") }
 
     val projectRepository = remember {
         object : ProjectRepository {
@@ -104,6 +112,37 @@ private fun MidTrimApp() {
         )
     }
 
+    projectToRename?.let { project ->
+        AlertDialog(
+            onDismissRequest = { projectToRename = null },
+            title = { Text("Rename Project") },
+            text = {
+                OutlinedTextField(
+                    value = renameText,
+                    onValueChange = { renameText = it },
+                    singleLine = true,
+                    label = { Text("Project name") }
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        projectListViewModel.renameProject(project.id, renameText)
+                        projectToRename = null
+                    },
+                    enabled = renameText.isNotBlank()
+                ) {
+                    Text("Rename")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { projectToRename = null }) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
+
     LaunchedEffect(Unit) {
         projectListViewModel.loadProjects()
     }
@@ -118,7 +157,10 @@ private fun MidTrimApp() {
                 uiState = uiState,
                 onNewProject = { navController.navigate(Route.VideoSelection.route) },
                 onDeleteProject = { projectListViewModel.deleteProject(it) },
-                onRenameProject = { projectListViewModel.renameProject(it.id, "Renamed") },
+                onRenameProject = {
+                    projectToRename = it
+                    renameText = it.name
+                },
                 onUpgrade = { navController.navigate(Route.Paywall.route) },
                 onProjectTap = {},
                 onRefresh = { projectListViewModel.loadProjects() },

@@ -36,7 +36,9 @@ class VideoSelectionViewModel: ObservableObject {
             uiState.isLoading = true
             do {
                 let metadata = try await importVideosUseCase.execute(videoURIs: uris)
-                uiState.selectedVideos.append(contentsOf: metadata)
+                let existingURIs = Set(uiState.selectedVideos.map(\.uri))
+                let newMetadata = metadata.filter { !existingURIs.contains($0.uri) }
+                uiState.selectedVideos.append(contentsOf: newMetadata)
                 uiState.mergedDuration = calculateMergedDurationUseCase.execute(
                     trimDuration: uiState.trimDuration,
                     videoCount: uiState.selectedVideos.count

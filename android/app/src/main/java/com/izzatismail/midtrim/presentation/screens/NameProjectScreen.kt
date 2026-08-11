@@ -6,7 +6,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.izzatismail.midtrim.presentation.navigation.Spacing
+import com.izzatismail.midtrim.ui.theme.Spacing
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,7 +35,7 @@ fun NameProjectScreen(
             modifier = modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(horizontal = Spacing.md.dp),
+                .padding(horizontal = Spacing.md),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -47,7 +47,7 @@ fun NameProjectScreen(
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Spacer(modifier = Modifier.height(Spacing.lg.dp))
+            Spacer(modifier = Modifier.height(Spacing.lg))
 
             Button(
                 onClick = { onSave(name) },

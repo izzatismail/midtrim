@@ -6,7 +6,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.izzatismail.midtrim.presentation.navigation.Spacing
+import com.izzatismail.midtrim.ui.theme.Spacing
 import com.izzatismail.midtrim.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,10 +39,10 @@ fun TrimDurationScreen(
             modifier = modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(horizontal = Spacing.md.dp),
+                .padding(horizontal = Spacing.md),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(Spacing.xl.dp))
+            Spacer(modifier = Modifier.height(Spacing.xl))
 
             Text(
                 text = "Select trim duration",
@@ -50,11 +50,11 @@ fun TrimDurationScreen(
                 color = MaterialTheme.colorScheme.onBackground
             )
 
-            Spacer(modifier = Modifier.height(Spacing.lg.dp))
+            Spacer(modifier = Modifier.height(Spacing.lg))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(Spacing.sm.dp)
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
                 durations.forEach { duration ->
                     FilterChip(
@@ -68,10 +68,10 @@ fun TrimDurationScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(Spacing.sm.dp))
+            Spacer(modifier = Modifier.height(Spacing.sm))
 
             Surface(
-                onClick = if (isPaidUser) ({ onCustomTap() }) else onCustomTap,
+                onClick = onCustomTap,
                 modifier = Modifier.fillMaxWidth(),
                 shape = MaterialTheme.shapes.medium,
                 color = if (isPaidUser)
@@ -80,7 +80,7 @@ fun TrimDurationScreen(
                     MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
             ) {
                 Row(
-                    modifier = Modifier.padding(Spacing.md.dp),
+                    modifier = Modifier.padding(Spacing.md),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
@@ -99,7 +99,7 @@ fun TrimDurationScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(Spacing.lg.dp))
+            Spacer(modifier = Modifier.height(Spacing.lg))
 
             QualityBadge(isPaidUser = isPaidUser, onUpgrade = onCustomTap)
 
@@ -112,7 +112,7 @@ fun TrimDurationScreen(
                 Text("Preview Trim")
             }
 
-            Spacer(modifier = Modifier.height(Spacing.md.dp))
+            Spacer(modifier = Modifier.height(Spacing.md))
         }
     }
 }
@@ -125,7 +125,7 @@ private fun QualityBadge(isPaidUser: Boolean, onUpgrade: () -> Unit) {
         color = MaterialTheme.colorScheme.surfaceVariant
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = Spacing.md.dp, vertical = Spacing.sm.dp),
+            modifier = Modifier.padding(horizontal = Spacing.md, vertical = Spacing.sm),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -137,7 +137,7 @@ private fun QualityBadge(isPaidUser: Boolean, onUpgrade: () -> Unit) {
                     PremiumAccent
             )
             if (!isPaidUser) {
-                Spacer(modifier = Modifier.width(Spacing.xs.dp))
+                Spacer(modifier = Modifier.width(Spacing.xs))
                 Text(
                     text = "🔒",
                     style = MaterialTheme.typography.bodyMedium,

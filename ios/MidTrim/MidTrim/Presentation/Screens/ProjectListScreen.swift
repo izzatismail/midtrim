@@ -7,38 +7,36 @@ struct ProjectListScreen: View {
     let onSettings: () -> Void
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Color.bgPrimary.ignoresSafeArea()
-                VStack(spacing: 0) {
-                    if !viewModel.uiState.isPaidUser {
-                        upgradeBanner
-                    }
-                    if viewModel.uiState.isLoading {
-                        Spacer()
-                        ProgressView()
-                        Spacer()
-                    } else if viewModel.uiState.projects.isEmpty {
-                        emptyState
-                    } else {
-                        projectList
-                    }
+        ZStack {
+            Color.bgPrimary.ignoresSafeArea()
+            VStack(spacing: 0) {
+                if !viewModel.uiState.isPaidUser {
+                    upgradeBanner
+                }
+                if viewModel.uiState.isLoading {
+                    Spacer()
+                    ProgressView()
+                    Spacer()
+                } else if viewModel.uiState.projects.isEmpty {
+                    emptyState
+                } else {
+                    projectList
                 }
             }
-            .navigationTitle("Projects")
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("...", action: onSettings).font(.titleLarge)
-                }
-                ToolbarItem(placement: .bottomBar) {
-                    Button(action: onNewProject) {
-                        Image(systemName: "plus")
-                            .font(.title)
-                            .padding()
-                            .background(Color.accentPrimary)
-                            .foregroundColor(.textPrimary)
-                            .clipShape(Circle())
-                    }
+        }
+        .navigationTitle("Projects")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("...", action: onSettings).font(.titleLarge)
+            }
+            ToolbarItem(placement: .bottomBar) {
+                Button(action: onNewProject) {
+                    Image(systemName: "plus")
+                        .font(.title)
+                        .padding()
+                        .background(Color.accentPrimary)
+                        .foregroundColor(.textPrimary)
+                        .clipShape(Circle())
                 }
             }
         }

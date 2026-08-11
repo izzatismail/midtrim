@@ -6,7 +6,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.izzatismail.midtrim.presentation.navigation.Spacing
+import com.izzatismail.midtrim.ui.theme.Spacing
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,7 +34,7 @@ fun HelpSettingsScreen(
             modifier = modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(horizontal = Spacing.md.dp),
+                .padding(horizontal = Spacing.md),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -46,7 +46,7 @@ fun HelpSettingsScreen(
             }
 
             restoreResult?.let {
-                Spacer(modifier = Modifier.height(Spacing.sm.dp))
+                Spacer(modifier = Modifier.height(Spacing.sm))
                 Text(
                     text = it,
                     style = MaterialTheme.typography.bodySmall,
@@ -54,7 +54,7 @@ fun HelpSettingsScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(Spacing.xl.dp))
+            Spacer(modifier = Modifier.height(Spacing.xl))
 
             Text(
                 text = "Version $appVersion",

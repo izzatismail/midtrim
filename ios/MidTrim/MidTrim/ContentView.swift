@@ -4,8 +4,16 @@ struct ContentView: View {
     var body: some View { MidTrimNavigation() }
 }
 
+private enum AppRoute: Hashable {
+    case projectList
+    case videoSelection
+    case trimDuration
+    case nameProject
+}
+
 @MainActor
 struct MidTrimNavigation: View {
+    @State private var path = [AppRoute]()
     @State private var showPaywall = false
     @State private var showSettings = false
 
@@ -39,14 +47,53 @@ struct MidTrimNavigation: View {
     }
 
     var body: some View {
-        TabView {
+        NavigationStack(path: $path) {
             ProjectListScreen(
                 viewModel: projectListViewModel,
-                onNewProject: { },
+                onNewProject: { path.append(.videoSelection) },
                 onUpgrade: { showPaywall = true },
                 onSettings: { showSettings = true }
             )
-            .tabItem { Label("Projects", systemImage: "folder") }
+            .navigationDestination(for: AppRoute.self) { route in
+                switch route {
+                case .projectList:
+                    ProjectListScreen(
+                        viewModel: projectListViewModel,
+                        onNewProject: { path.append(.videoSelection) },
+                        onUpgrade: { showPaywall = true },
+                        onSettings: { showSettings = true }
+                    )
+                case .videoSelection:
+                    VideoSelectionScreen(
+                        viewModel: videoSelectionViewModel,
+                        onContinue: { path.append(.trimDuration) },
+                        onBack: { path.removeLast() },
+                        onUpgrade: { showPaywall = true }
+                    )
+                case .trimDuration:
+                    let isPaid = videoSelectionViewModel.uiState.isPaidUser
+                    TrimDurationScreen(
+                        selectedDuration: videoSelectionViewModel.uiState.trimDuration,
+                        isPaidUser: isPaid,
+                        onDurationSelected: { videoSelectionViewModel.setTrimDuration($0) },
+                        onCustomTap: {
+                            if isPaid {
+                                videoSelectionViewModel.setTrimDuration(4.0)
+                            } else {
+                                showPaywall = true
+                            }
+                        },
+                        onContinue: { path.append(.nameProject) },
+                        onBack: { path.removeLast() }
+                    )
+                case .nameProject:
+                    NameProjectScreen(
+                        defaultName: "Trim Project",
+                        onSave: { path.removeAll() },
+                        onDiscard: { path.removeAll() }
+                    )
+                }
+            }
         }
         .sheet(isPresented: $showPaywall) {
             PaywallScreen(onPurchase: { }, onRestore: { }, onDismiss: { showPaywall = false })

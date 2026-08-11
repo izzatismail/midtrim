@@ -37,8 +37,8 @@ struct VideoSelectionScreen: View {
     private var videoList: some View {
         VStack(spacing: AppSpacing.sm) {
             List {
-                ForEach(viewModel.uiState.selectedVideos.indices, id: \.self) { index in
-                    let video = viewModel.uiState.selectedVideos[index]
+                ForEach(viewModel.uiState.selectedVideos, id: \.uri) { video in
+                    let index = viewModel.uiState.selectedVideos.firstIndex(where: { $0.uri == video.uri }) ?? 0
                     HStack {
                         VStack(alignment: .leading, spacing: AppSpacing.xs) {
                             Text(video.uri.components(separatedBy: "/").last ?? "")

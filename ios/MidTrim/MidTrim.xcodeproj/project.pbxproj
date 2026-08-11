@@ -63,6 +63,19 @@
 		120FB654C02CD31B422AD7B2 /* SwiftDataProjectRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF5996598E7FE78D4D2DE1E /* SwiftDataProjectRepositoryTests.swift */; };
 		8AE3736FB2F7F69C6CDAA989 /* DefaultVideoFileRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEABDCFD6C4CA0573B7C028E /* DefaultVideoFileRepositoryTests.swift */; };
 		332990B8391054ECFF7C2C1F /* KeychainEntitlementCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71F9136ABAF03E4D240869F /* KeychainEntitlementCacheTests.swift */; };
+		A1B2C3D4E5F6000100000001 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A7000200000001 /* Colors.swift */; };
+		A1B2C3D4E5F6000100000002 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A7000200000002 /* Typography.swift */; };
+		A1B2C3D4E5F6000100000003 /* ProjectListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A7000200000003 /* ProjectListViewModel.swift */; };
+		A1B2C3D4E5F6000100000004 /* VideoSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A7000200000004 /* VideoSelectionViewModel.swift */; };
+		A1B2C3D4E5F6000100000005 /* ProjectListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A7000200000005 /* ProjectListScreen.swift */; };
+		A1B2C3D4E5F6000100000006 /* VideoSelectionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A7000200000006 /* VideoSelectionScreen.swift */; };
+		A1B2C3D4E5F6000100000007 /* TrimDurationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A7000200000007 /* TrimDurationScreen.swift */; };
+		A1B2C3D4E5F6000100000008 /* NameProjectScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A7000200000008 /* NameProjectScreen.swift */; };
+		A1B2C3D4E5F6000100000009 /* PaywallScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A7000200000009 /* PaywallScreen.swift */; };
+		A1B2C3D4E5F600010000000A /* HelpSettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A700020000000A /* HelpSettingsScreen.swift */; };
+		A1B2C3D4E5F600010000000B /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A700020000000B /* Nunito-Regular.ttf */; };
+		A1B2C3D4E5F600010000000C /* Nunito-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A700020000000C /* Nunito-SemiBold.ttf */; };
+		A1B2C3D4E5F600010000000D /* Nunito-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A700020000000D /* Nunito-Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -144,6 +157,19 @@
 		DBF5996598E7FE78D4D2DE1E /* SwiftDataProjectRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftDataProjectRepositoryTests.swift; path = MidTrimTests/Data/SwiftDataProjectRepositoryTests.swift; sourceTree = "<group>"; };
 		BEABDCFD6C4CA0573B7C028E /* DefaultVideoFileRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DefaultVideoFileRepositoryTests.swift; path = MidTrimTests/Data/DefaultVideoFileRepositoryTests.swift; sourceTree = "<group>"; };
 		F71F9136ABAF03E4D240869F /* KeychainEntitlementCacheTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeychainEntitlementCacheTests.swift; path = MidTrimTests/Data/KeychainEntitlementCacheTests.swift; sourceTree = "<group>"; };
+		B2C3D4E5F6A7000200000001 /* Colors.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MidTrim/Presentation/Theme/Colors.swift; sourceTree = "<group>"; };
+		B2C3D4E5F6A7000200000002 /* Typography.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MidTrim/Presentation/Theme/Typography.swift; sourceTree = "<group>"; };
+		B2C3D4E5F6A7000200000003 /* ProjectListViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MidTrim/Presentation/ViewModels/ProjectListViewModel.swift; sourceTree = "<group>"; };
+		B2C3D4E5F6A7000200000004 /* VideoSelectionViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MidTrim/Presentation/ViewModels/VideoSelectionViewModel.swift; sourceTree = "<group>"; };
+		B2C3D4E5F6A7000200000005 /* ProjectListScreen.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MidTrim/Presentation/Screens/ProjectListScreen.swift; sourceTree = "<group>"; };
+		B2C3D4E5F6A7000200000006 /* VideoSelectionScreen.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MidTrim/Presentation/Screens/VideoSelectionScreen.swift; sourceTree = "<group>"; };
+		B2C3D4E5F6A7000200000007 /* TrimDurationScreen.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MidTrim/Presentation/Screens/TrimDurationScreen.swift; sourceTree = "<group>"; };
+		B2C3D4E5F6A7000200000008 /* NameProjectScreen.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MidTrim/Presentation/Screens/NameProjectScreen.swift; sourceTree = "<group>"; };
+		B2C3D4E5F6A7000200000009 /* PaywallScreen.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MidTrim/Presentation/Screens/PaywallScreen.swift; sourceTree = "<group>"; };
+		B2C3D4E5F6A700020000000A /* HelpSettingsScreen.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MidTrim/Presentation/Screens/HelpSettingsScreen.swift; sourceTree = "<group>"; };
+		B2C3D4E5F6A700020000000B /* Nunito-Regular.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = MidTrim/Resources/Fonts/Nunito-Regular.ttf; sourceTree = "<group>"; };
+		B2C3D4E5F6A700020000000C /* Nunito-SemiBold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = MidTrim/Resources/Fonts/Nunito-SemiBold.ttf; sourceTree = "<group>"; };
+		B2C3D4E5F6A700020000000D /* Nunito-Bold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = MidTrim/Resources/Fonts/Nunito-Bold.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,6 +283,19 @@
 				9C6AB444D3073F653B0D9B36 /* RestoreEntitlementUseCase.swift */,
 				F474DD0259790635007426B5 /* PurchaseEntitlementUseCase.swift */,
 				BC50B5A201A51ED6176672E7 /* IAPUseCaseTests.swift */,
+				B2C3D4E5F6A7000200000001 /* Colors.swift */,
+				B2C3D4E5F6A7000200000002 /* Typography.swift */,
+				B2C3D4E5F6A7000200000003 /* ProjectListViewModel.swift */,
+				B2C3D4E5F6A7000200000004 /* VideoSelectionViewModel.swift */,
+				B2C3D4E5F6A7000200000005 /* ProjectListScreen.swift */,
+				B2C3D4E5F6A7000200000006 /* VideoSelectionScreen.swift */,
+				B2C3D4E5F6A7000200000007 /* TrimDurationScreen.swift */,
+				B2C3D4E5F6A7000200000008 /* NameProjectScreen.swift */,
+				B2C3D4E5F6A7000200000009 /* PaywallScreen.swift */,
+				B2C3D4E5F6A700020000000A /* HelpSettingsScreen.swift */,
+				B2C3D4E5F6A700020000000B /* Nunito-Regular.ttf */,
+				B2C3D4E5F6A700020000000C /* Nunito-SemiBold.ttf */,
+				B2C3D4E5F6A700020000000D /* Nunito-Bold.ttf */,
 			);
 			sourceTree = "<group>";
 		};
@@ -386,6 +425,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				45CAEA6CFC4E1E54024426AF /* Assets.xcassets in Resources */,
+				A1B2C3D4E5F600010000000B /* Nunito-Regular.ttf in Resources */,
+				A1B2C3D4E5F600010000000C /* Nunito-SemiBold.ttf in Resources */,
+				A1B2C3D4E5F600010000000D /* Nunito-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,6 +481,16 @@
 				7F9CAEE614FAE20B57620F54 /* StoreKitServiceProtocol.swift in Sources */,
 				CD5F3251FC503D8150EB5C97 /* RestoreEntitlementUseCase.swift in Sources */,
 				4ACB50E8805478A78ABEE141 /* PurchaseEntitlementUseCase.swift in Sources */,
+				A1B2C3D4E5F6000100000001 /* Colors.swift in Sources */,
+				A1B2C3D4E5F6000100000002 /* Typography.swift in Sources */,
+				A1B2C3D4E5F6000100000003 /* ProjectListViewModel.swift in Sources */,
+				A1B2C3D4E5F6000100000004 /* VideoSelectionViewModel.swift in Sources */,
+				A1B2C3D4E5F6000100000005 /* ProjectListScreen.swift in Sources */,
+				A1B2C3D4E5F6000100000006 /* VideoSelectionScreen.swift in Sources */,
+				A1B2C3D4E5F6000100000007 /* TrimDurationScreen.swift in Sources */,
+				A1B2C3D4E5F6000100000008 /* NameProjectScreen.swift in Sources */,
+				A1B2C3D4E5F6000100000009 /* PaywallScreen.swift in Sources */,
+				A1B2C3D4E5F600010000000A /* HelpSettingsScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -622,6 +674,11 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIAppFonts = (
+					"Nunito-Regular",
+					"Nunito-SemiBold",
+					"Nunito-Bold",
+				);
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -651,6 +708,11 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIAppFonts = (
+					"Nunito-Regular",
+					"Nunito-SemiBold",
+					"Nunito-Bold",
+				);
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

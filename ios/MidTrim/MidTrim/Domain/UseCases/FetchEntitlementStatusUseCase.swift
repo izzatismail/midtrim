@@ -1,6 +1,6 @@
 import Foundation
 
-struct FetchEntitlementStatusUseCase {
+struct FetchEntitlementStatusUseCase: @unchecked Sendable {
     private let cache: EntitlementCacheProtocol
 
     init(cache: EntitlementCacheProtocol) {

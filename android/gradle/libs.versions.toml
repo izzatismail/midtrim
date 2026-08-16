@@ -14,7 +14,9 @@ ktlintTool = "1.5.0"
 detekt = "1.23.8"
 room = "2.7.1"
 ksp = "2.3.10"
+billing = "7.1.1"
 securityCrypto = "1.1.0-alpha06"
+orgJson = "20231013"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,6 +40,8 @@ androidx-room-runtime = { group = "androidx.room", name = "room-runtime", versio
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 androidx-security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "securityCrypto" }
+androidx-billing = { group = "com.android.billingclient", name = "billing", version.ref = "billing" }
+org-json = { group = "org.json", name = "json", version.ref = "orgJson" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -104,7 +104,7 @@ private fun MidTrimApp(activity: MainActivity) {
     val restoreEntitlementUseCase = remember { RestoreEntitlementUseCase(billingService = playBillingService, cache = entitlementCacheWriter) }
 
     LaunchedEffect(Unit) {
-        restoreEntitlementUseCase.execute()
+        runCatching { restoreEntitlementUseCase.execute() }
     }
 
     val projectListViewModel = remember {

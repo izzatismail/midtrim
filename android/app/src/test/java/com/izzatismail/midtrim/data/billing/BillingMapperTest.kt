@@ -91,6 +91,16 @@ class BillingMapperTest {
     }
 
     @Test
+    fun `pending purchase surfaces a clear message`() {
+        val billingResult = result(BillingClient.BillingResponseCode.OK)
+        val purchases = listOf(purchaseFor(listOf(productId), state = JSON_PENDING))
+
+        val purchaseResult = mapPurchaseResult(billingResult, purchases, productId)
+
+        assertEquals(PurchaseResult.Failed("Purchase is pending. Please complete payment in the store."), purchaseResult)
+    }
+
+    @Test
     fun `refund downgrades cached entitlement to not found without touching products`() {
         val ok = result(BillingClient.BillingResponseCode.OK)
         val purchasedList = listOf(purchaseFor(listOf(productId)))

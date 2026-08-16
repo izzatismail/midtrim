@@ -259,7 +259,7 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 *Governing rules for this phase: RULES.md §2.1 (offline-only exception scope), §2.6 (IAP/entitlement security), §7 (Concurrency — non-blocking restore); DESIGN.md §6.5–§6.6.*
 
 ### Blockers / Notes
-- Phase 5 cannot be marked `Complete` until the iOS StoreKit 2 PR is also merged to main (Android PR #xx provides the Android half only).
+- Phase 5 cannot be marked `Complete` until the iOS StoreKit 2 PR is also merged to main (Android PR #7 provides the Android half only).
 - (None yet)
 - Note: real end-to-end Play Billing verification (beyond mocked/unit-tested logic) requires the app to exist on at least a Play Console internal testing track — if this isn't set up yet, flag it here as a blocker until Play Console access is ready.
 

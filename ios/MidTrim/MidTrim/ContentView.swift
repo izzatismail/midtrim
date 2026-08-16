@@ -21,6 +21,8 @@ struct MidTrimNavigation: View {
 
     private let projectListViewModel: ProjectListViewModel
     private let videoSelectionViewModel: VideoSelectionViewModel
+    private let storeService: FakeStoreKitService
+    private let cache: KeychainEntitlementCache
 
     init(modelContainer: ModelContainer) {
         let projectRepo = SwiftDataProjectRepository(modelContainer: modelContainer)
@@ -28,6 +30,9 @@ struct MidTrimNavigation: View {
         let cache = KeychainEntitlementCache()
         let metadataService = FakeVideoMetadataService()
         let storeService = FakeStoreKitService()
+
+        self.storeService = storeService
+        self.cache = cache
 
         let fetchProjects = FetchProjectsUseCase(repository: projectRepo)
         let deleteProject = DeleteProjectUseCase(projectRepository: projectRepo, fileRepository: fileRepo)
@@ -47,11 +52,6 @@ struct MidTrimNavigation: View {
             validateTrimDurationUseCase: ValidateTrimDurationUseCase(),
             fetchEntitlementStatusUseCase: fetchEntitlement
         )
-
-        Task {
-            let restore = RestoreEntitlementUseCase(storeService: storeService, cache: cache)
-            _ = await restore.execute()
-        }
     }
 
     var body: some View {
@@ -108,6 +108,10 @@ struct MidTrimNavigation: View {
         }
         .sheet(isPresented: $showSettings) {
             NavigationStack { HelpSettingsScreen(onRestore: { }, onDismiss: { showSettings = false }) }
+        }
+        .task {
+            let restore = RestoreEntitlementUseCase(storeService: storeService, cache: cache)
+            _ = await restore.execute()
         }
     }
 }

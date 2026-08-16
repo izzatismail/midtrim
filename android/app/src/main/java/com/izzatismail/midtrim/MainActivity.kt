@@ -15,7 +15,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.room.Room
 import com.izzatismail.midtrim.data.local.AppDatabase
 import com.izzatismail.midtrim.data.repository.EncryptedSharedPrefsEntitlementCache
 import com.izzatismail.midtrim.data.repository.ProjectRepositoryImpl
@@ -50,7 +49,7 @@ private fun MidTrimApp() {
     var renameText by remember { mutableStateOf("") }
 
     val context = LocalContext.current
-    val database = remember { Room.databaseBuilder(context, AppDatabase::class.java, "midtrim_db").build() }
+    val database = remember { AppDatabase.getInstance(context) }
 
     val projectRepository = remember { ProjectRepositoryImpl(database) }
     val videoFileRepository = remember { VideoFileRepositoryImpl(context) }

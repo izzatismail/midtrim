@@ -491,6 +491,10 @@
 				A1B2C3D4E5F6000100000008 /* NameProjectScreen.swift in Sources */,
 				A1B2C3D4E5F6000100000009 /* PaywallScreen.swift in Sources */,
 				A1B2C3D4E5F600010000000A /* HelpSettingsScreen.swift in Sources */,
+				E109137C9C2F3F9BC6EFFB9C /* ModelMappers.swift in Sources */,
+				7CAAF648B9A07683984F5E82 /* SwiftDataProjectRepository.swift in Sources */,
+				3EB84D4F743F1B8752DD75FC /* DefaultVideoFileRepository.swift in Sources */,
+				C12BD03E3AB495C6194F9B01 /* KeychainEntitlementCache.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

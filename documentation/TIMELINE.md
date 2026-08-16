@@ -163,7 +163,7 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 ---
 
 ## Phase 4: UI Layer — Presentation & ViewModels
-**Status:** `In Progress` | **Current Progress:** 30%
+**Status:** `In Progress` | **Current Progress:** 80%
 
 ### Deliverables
 
@@ -175,18 +175,18 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 - [x] ProjectListViewModel (observe projects flow, delete, rename, navigation, **read entitlement status to show/hide upgrade banner**)
 - [x] VideoSelectionViewModel (manage selected videos in-memory, reorder, trim duration selection, merged total calculation, **enforce tier-appropriate video cap and duration options via ValidateTrimDurationUseCase/FetchEntitlementStatusUseCase**)
 - [x] Navigation: Compose Navigation or similar (ProjectList → VideoSelection → TrimDuration → NameProject → back to ProjectList)
-- [ ] Basic UI tests (critical flow: select → reorder → trim → save → delete), **tested against both a fake free-tier and fake paid-tier entitlement state**
+- [ ] Basic UI tests (critical flow: select → reorder → trim → save → delete), **tested against both a fake free-tier and fake paid-tier entitlement state** *(moved to Phase 8)*
 
 **iOS (SwiftUI):**
 - [x] Same four screens as Android, SwiftUI implementation, same tiered lock-affordance behavior
 - [x] Same ViewModels (adapted to @Observable or ObservableObject)
-- [ ] Navigation: NavigationStack or NavigationView (iOS 16+ or fallback)
-- [ ] Basic UI tests (XCUITest critical flow), tested against both fake free-tier and paid-tier entitlement states
+- [x] Navigation: NavigationStack or NavigationView (iOS 16+ or fallback)
+- [ ] Basic UI tests (XCUITest critical flow), tested against both fake free-tier and paid-tier entitlement states *(moved to Phase 8)*
 
 **Both platforms:**
 - [ ] No crashes on typical workflow
 - [ ] All screens render and navigate correctly
-- [ ] UI tests pass for critical flow (import → reorder → trim → save)
+- [ ] UI tests pass for critical flow (import → reorder → trim → save) *(moved to Phase 8)*
 - [ ] Lock-affordance UI (disabled state + lock icon, tap-to-open-paywall stub) renders correctly on all applicable controls — **actual Paywall screen navigation target can be a placeholder/stub in this phase**, since the real Paywall screen is built in Phase 5
 
 ### Effort Estimate
@@ -356,6 +356,9 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 
 ### Deliverables
 - [ ] Internal beta builds created (TestFlight for iOS, Google Play internal testing for Android)
+- [ ] **UI tests (deferred from Phase 4):**
+  - [ ] Android: Basic Compose UI tests covering critical flow (select → reorder → trim → save → delete), tested against both fake free-tier and fake paid-tier entitlement state
+  - [ ] iOS: Basic XCUITest covering critical flow, tested against both fake free-tier and paid-tier entitlement states
 - [ ] Real device testing across multiple models:
   - [ ] iOS: 3+ models (e.g., iPhone 13, iPhone 15, iPhone SE)
   - [ ] Android: 3+ devices (e.g., Pixel 5, Samsung Galaxy, OnePlus; different OS versions API 26–35)
@@ -430,7 +433,7 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 | 1. Setup | Complete | 100% | CI green, first merge |
 | 2. Domain | Complete | 100% | 100% tests, code review |
 | 3. Data | Complete | 100% | Integration tests pass; 3 items blocked on Phase 6 |
-| 4. UI | In Progress | 30% | Critical flow works |
+| 4. UI | In Progress | 80% | Critical flow works |
 | 5. In-App Purchase & Entitlement | Not Started | 0% | Test purchase/restore unlocks features |
 | 6. Video Processing | Not Started | 0% | Playable output, perf OK, quality tiers verified |
 | 7. Design Polish | Not Started | 0% | Accessibility audit pass |

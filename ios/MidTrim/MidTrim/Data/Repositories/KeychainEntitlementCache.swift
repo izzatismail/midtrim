@@ -46,7 +46,7 @@ actor KeychainEntitlementCache: EntitlementCacheProtocol {
         case lastVerifiedAt
     }
 
-    private func readValue<T>(for key: Key) throws -> T {
+    private func readValue<T: Codable>(for key: Key) throws -> T {
         var query = baseQuery()
         query[kSecReturnData as String] = kCFBooleanTrue
         query[kSecMatchLimit as String] = kSecMatchLimitOne
@@ -59,15 +59,11 @@ actor KeychainEntitlementCache: EntitlementCacheProtocol {
             throw KeychainError.readFailed(status: status)
         }
 
-        let value = try JSONSerialization.jsonObject(with: data, options: [])
-        guard let result = value as? T else {
-            throw KeychainError.typeMismatch
-        }
-        return result
+        return try JSONDecoder().decode(T.self, from: data)
     }
 
-    private func writeValue<T>(_ value: T, for key: Key) throws {
-        let data = try JSONSerialization.data(withJSONObject: value, options: [])
+    private func writeValue<T: Codable>(_ value: T, for key: Key) throws {
+        let data = try JSONEncoder().encode(value)
         var query = baseQuery()
         query[kSecAttrAccount as String] = "\(account).\(key.rawValue)"
 
@@ -101,6 +97,5 @@ actor KeychainEntitlementCache: EntitlementCacheProtocol {
         case readFailed(status: OSStatus)
         case writeFailed(status: OSStatus)
         case deleteFailed(status: OSStatus)
-        case typeMismatch
     }
 }

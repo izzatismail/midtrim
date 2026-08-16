@@ -14,6 +14,7 @@ fun HelpSettingsScreen(
     appVersion: String = "1.0.0",
     onRestore: () -> Unit,
     onDismiss: () -> Unit,
+    onLicenses: () -> Unit = {},
     restoreResult: String? = null,
     modifier: Modifier = Modifier
 ) {
@@ -51,6 +52,15 @@ fun HelpSettingsScreen(
                     text = it,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+
+            Spacer(modifier = Modifier.height(Spacing.md))
+
+            TextButton(onClick = onLicenses) {
+                Text(
+                    text = "Open Source Licenses",
+                    style = MaterialTheme.typography.bodySmall
                 )
             }
 

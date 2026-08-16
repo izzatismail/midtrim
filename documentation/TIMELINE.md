@@ -210,20 +210,20 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 ---
 
 ## Phase 5: In-App Purchase & Entitlement
-**Status:** `Not Started` | **Current Progress:** 0%
+**Status:** `In Progress` | **Current Progress:** 45%
 
 ### Deliverables
 
 **Android:**
-- [ ] Google Play Billing Library integrated (`BillingClient` setup, connection lifecycle handling)
+- [x] Google Play Billing Library integrated (`BillingClient` setup, connection lifecycle handling)
 - [ ] Non-consumable product configured in Play Console (`com.midtrim.fullunlock` or final product ID) for later manual/beta testing — CI itself uses mocked `BillingClient`, not the real product
-- [ ] `PurchaseEntitlementUseCase` wired to real `BillingClient.launchBillingFlow`
-- [ ] `RestoreEntitlementUseCase` wired to real `BillingClient.queryPurchasesAsync`
-- [ ] Automatic restore-on-launch wired into app startup (non-blocking, per ARCHITECTURE.md §7)
-- [ ] Paywall screen (Compose) built per DESIGN.md §6.5
-- [ ] Help/Settings screen (Compose) built per DESIGN.md §6.6, including manual "Restore Purchases" button
-- [ ] Lock-affordance tap targets (from Phase 4 stubs) now navigate to the real Paywall screen
-- [ ] Unit tests against mocked `BillingClient`: success, cancellation, failure, restore-found, restore-not-found, restore-network-failure-preserves-cache, **restore-detects-refund-downgrades-cache-without-touching-existing-projects**
+- [x] `PurchaseEntitlementUseCase` wired to real `BillingClient.launchBillingFlow`
+- [x] `RestoreEntitlementUseCase` wired to real `BillingClient.queryPurchasesAsync`
+- [x] Automatic restore-on-launch wired into app startup (non-blocking, per ARCHITECTURE.md §7)
+- [x] Paywall screen (Compose) built per DESIGN.md §6.5
+- [x] Help/Settings screen (Compose) built per DESIGN.md §6.6, including manual "Restore Purchases" button
+- [x] Lock-affordance tap targets (from Phase 4 stubs) now navigate to the real Paywall screen
+- [x] Unit tests against mocked `BillingClient`: success, cancellation, failure, restore-found, restore-not-found, restore-network-failure-preserves-cache, **restore-detects-refund-downgrades-cache-without-touching-existing-projects**
 
 **iOS:**
 - [ ] StoreKit 2 integrated (`Product`, `Transaction` APIs)
@@ -259,6 +259,7 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 *Governing rules for this phase: RULES.md §2.1 (offline-only exception scope), §2.6 (IAP/entitlement security), §7 (Concurrency — non-blocking restore); DESIGN.md §6.5–§6.6.*
 
 ### Blockers / Notes
+- Phase 5 cannot be marked `Complete` until the iOS StoreKit 2 PR is also merged to main (Android PR #xx provides the Android half only).
 - (None yet)
 - Note: real end-to-end Play Billing verification (beyond mocked/unit-tested logic) requires the app to exist on at least a Play Console internal testing track — if this isn't set up yet, flag it here as a blocker until Play Console access is ready.
 
@@ -434,7 +435,7 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 | 2. Domain | Complete | 100% | 100% tests, code review |
 | 3. Data | Complete | 100% | Integration tests pass; 3 items blocked on Phase 6 |
 | 4. UI | In Progress | 80% | Critical flow works |
-| 5. In-App Purchase & Entitlement | Not Started | 0% | Test purchase/restore unlocks features |
+| 5. In-App Purchase & Entitlement | In Progress | 45% | Test purchase/restore unlocks features |
 | 6. Video Processing | Not Started | 0% | Playable output, perf OK, quality tiers verified |
 | 7. Design Polish | Not Started | 0% | Accessibility audit pass |
 | 8. Beta Testing | Not Started | 0% | Zero crashes, 99.5% success, real IAP verified |

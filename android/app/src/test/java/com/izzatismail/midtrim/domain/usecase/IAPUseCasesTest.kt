@@ -83,6 +83,16 @@ class RestoreEntitlementUseCaseTest {
         assertFalse(result)
         assertTrue(cache.isPurchased)
     }
+
+    @Test
+    fun `restore detects refund downgrades cache without touching existing projects`() = runBlocking {
+        val store = FakePlayBillingService(restoreResult = RestoreResult.NotFound)
+        val cache = FakeEntitlementCache(isPurchased = true)
+        val useCase = RestoreEntitlementUseCase(store, cache)
+        val result = useCase.execute()
+        assertFalse(result)
+        assertFalse(cache.isPurchased)
+    }
 }
 
 class FakePlayBillingService(

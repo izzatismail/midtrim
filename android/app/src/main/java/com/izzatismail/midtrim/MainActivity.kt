@@ -11,24 +11,20 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Room
+import com.izzatismail.midtrim.data.local.AppDatabase
+import com.izzatismail.midtrim.data.repository.EncryptedSharedPrefsEntitlementCache
+import com.izzatismail.midtrim.data.repository.ProjectRepositoryImpl
+import com.izzatismail.midtrim.data.repository.VideoFileRepositoryImpl
 import com.izzatismail.midtrim.domain.entity.ProjectInfo
 import com.izzatismail.midtrim.domain.entity.SourceVideoInfo
 import com.izzatismail.midtrim.domain.entity.VideoMetadata
-import com.izzatismail.midtrim.domain.repository.EntitlementCacheReader
-import com.izzatismail.midtrim.domain.repository.ProjectRepository
-import com.izzatismail.midtrim.domain.repository.VideoFileRepository
-import com.izzatismail.midtrim.domain.repository.VideoMetadataService
-import com.izzatismail.midtrim.domain.usecase.CalculateMergedDurationUseCase
-import com.izzatismail.midtrim.domain.usecase.DeleteProjectUseCase
-import com.izzatismail.midtrim.domain.usecase.FetchEntitlementStatusUseCase
-import com.izzatismail.midtrim.domain.usecase.FetchProjectsUseCase
-import com.izzatismail.midtrim.domain.usecase.ImportVideosUseCase
-import com.izzatismail.midtrim.domain.usecase.RenameProjectUseCase
-import com.izzatismail.midtrim.domain.usecase.ReorderVideosUseCase
-import com.izzatismail.midtrim.domain.usecase.ValidateTrimDurationUseCase
+import com.izzatismail.midtrim.domain.repository.*
+import com.izzatismail.midtrim.domain.usecase.*
 import com.izzatismail.midtrim.presentation.navigation.Route
 import com.izzatismail.midtrim.presentation.screens.*
 import com.izzatismail.midtrim.presentation.viewmodel.ProjectListViewModel
@@ -53,42 +49,44 @@ private fun MidTrimApp() {
     var projectToRename by remember { mutableStateOf<ProjectInfo?>(null) }
     var renameText by remember { mutableStateOf("") }
 
-    val projectRepository = remember {
-        object : ProjectRepository {
-            override suspend fun fetchAllProjects(): List<ProjectInfo> = emptyList()
-            override suspend fun fetchProject(id: String): ProjectInfo? = null
-            override suspend fun save(project: ProjectInfo, sourceVideos: List<SourceVideoInfo>) = TODO("DI")
-            override suspend fun delete(id: String) = TODO("DI")
-            override suspend fun rename(id: String, name: String) = TODO("DI")
-        }
-    }
-    val videoFileRepository = remember {
-        object : VideoFileRepository {
-            override suspend fun saveOutputVideo(sourceUri: String, targetFileName: String): String = TODO("DI")
-            override suspend fun createDecryptedCopyForShare(uri: String): String = TODO("DI")
-            override suspend fun createTempSegmentDir(): String = TODO("DI")
-            override suspend fun cleanupTempSegments(dir: String) = TODO("DI")
-            override suspend fun deleteOutputVideo(uri: String) = TODO("DI")
-            override suspend fun deleteThumbnail(uri: String) = TODO("DI")
-        }
-    }
-    val entitlementCacheReader = remember {
-        object : EntitlementCacheReader {
-            override val isPurchased: Boolean get() = false
-            override val productId: String? get() = null
-            override val lastVerifiedAt: Long? get() = null
-        }
-    }
+    val context = LocalContext.current
+    val database = remember { Room.databaseBuilder(context, AppDatabase::class.java, "midtrim_db").build() }
+
+    val projectRepository = remember { ProjectRepositoryImpl(database) }
+    val videoFileRepository = remember { VideoFileRepositoryImpl(context) }
+    val entitlementCacheWriter = remember { EncryptedSharedPrefsEntitlementCache(context) }
+
     val videoMetadataService = remember {
         object : VideoMetadataService {
-            override suspend fun fetchMetadata(videoUri: String): VideoMetadata = TODO("DI")
+            override suspend fun fetchMetadata(videoUri: String): VideoMetadata {
+                return VideoMetadata(
+                    uri = videoUri,
+                    duration = 10.0,
+                    resolutionWidth = 1920,
+                    resolutionHeight = 1080,
+                    fileSize = 1_000_000L,
+                    format = "mp4"
+                )
+            }
+        }
+    }
+
+    val playBillingService = remember {
+        object : PlayBillingService {
+            override suspend fun purchase(productId: String): PurchaseResult = PurchaseResult.Cancelled
+            override suspend fun restorePurchases(): RestoreResult = RestoreResult.NotFound
         }
     }
 
     val fetchProjectsUseCase = remember { FetchProjectsUseCase(repository = projectRepository) }
     val deleteProjectUseCase = remember { DeleteProjectUseCase(projectRepository = projectRepository, fileRepository = videoFileRepository) }
     val renameProjectUseCase = remember { RenameProjectUseCase(repository = projectRepository) }
-    val fetchEntitlementStatusUseCase = remember { FetchEntitlementStatusUseCase(cache = entitlementCacheReader) }
+    val fetchEntitlementStatusUseCase = remember { FetchEntitlementStatusUseCase(cache = entitlementCacheWriter) }
+    val restoreEntitlementUseCase = remember { RestoreEntitlementUseCase(billingService = playBillingService, cache = entitlementCacheWriter) }
+
+    LaunchedEffect(Unit) {
+        restoreEntitlementUseCase.execute()
+    }
 
     val projectListViewModel = remember {
         ProjectListViewModel(

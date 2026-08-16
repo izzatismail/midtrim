@@ -1,7 +1,9 @@
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
-    var body: some View { MidTrimNavigation() }
+    @Environment(\.modelContext) private var modelContext
+    var body: some View { MidTrimNavigation(modelContainer: modelContext.container) }
 }
 
 private enum AppRoute: Hashable {
@@ -20,16 +22,17 @@ struct MidTrimNavigation: View {
     private let projectListViewModel: ProjectListViewModel
     private let videoSelectionViewModel: VideoSelectionViewModel
 
-    init() {
-        let stubProjectRepo = StubProjectRepository()
-        let stubFileRepo = StubVideoFileRepository()
-        let stubCache = StubEntitlementCache()
-        let stubMetadata = StubVideoMetadataService()
+    init(modelContainer: ModelContainer) {
+        let projectRepo = SwiftDataProjectRepository(modelContainer: modelContainer)
+        let fileRepo = DefaultVideoFileRepository()
+        let cache = KeychainEntitlementCache()
+        let metadataService = FakeVideoMetadataService()
+        let storeService = FakeStoreKitService()
 
-        let fetchProjects = FetchProjectsUseCase(repository: stubProjectRepo)
-        let deleteProject = DeleteProjectUseCase(projectRepository: stubProjectRepo, fileRepository: stubFileRepo)
-        let renameProject = RenameProjectUseCase(repository: stubProjectRepo)
-        let fetchEntitlement = FetchEntitlementStatusUseCase(cache: stubCache)
+        let fetchProjects = FetchProjectsUseCase(repository: projectRepo)
+        let deleteProject = DeleteProjectUseCase(projectRepository: projectRepo, fileRepository: fileRepo)
+        let renameProject = RenameProjectUseCase(repository: projectRepo)
+        let fetchEntitlement = FetchEntitlementStatusUseCase(cache: cache)
 
         projectListViewModel = ProjectListViewModel(
             fetchProjectsUseCase: fetchProjects,
@@ -38,12 +41,17 @@ struct MidTrimNavigation: View {
             fetchEntitlementStatusUseCase: fetchEntitlement
         )
         videoSelectionViewModel = VideoSelectionViewModel(
-            importVideosUseCase: ImportVideosUseCase(metadataService: stubMetadata, entitlementCache: fetchEntitlement),
+            importVideosUseCase: ImportVideosUseCase(metadataService: metadataService, entitlementCache: fetchEntitlement),
             reorderVideosUseCase: ReorderVideosUseCase(),
             calculateMergedDurationUseCase: CalculateMergedDurationUseCase(),
             validateTrimDurationUseCase: ValidateTrimDurationUseCase(),
             fetchEntitlementStatusUseCase: fetchEntitlement
         )
+
+        Task {
+            let restore = RestoreEntitlementUseCase(storeService: storeService, cache: cache)
+            _ = await restore.execute()
+        }
     }
 
     var body: some View {
@@ -104,34 +112,19 @@ struct MidTrimNavigation: View {
     }
 }
 
-private struct StubProjectRepository: ProjectRepositoryProtocol {
-    func fetchAllProjects() async throws -> [ProjectInfo] { [] }
-    func fetchProject(by id: UUID) async throws -> ProjectInfo? { nil }
-    func save(project: ProjectInfo, sourceVideos: [SourceVideoInfo]) async throws {}
-    func delete(by id: UUID) async throws {}
-    func rename(by id: UUID, to name: String) async throws {}
-}
-
-private struct StubVideoFileRepository: VideoFileRepositoryProtocol {
-    func saveOutputVideo(from sourceUri: String, targetFileName: String) async throws -> String { "" }
-    func createDecryptedCopyForShare(uri: String) async throws -> String { "" }
-    func createTempSegmentDir() async throws -> String { "" }
-    func cleanupTempSegments(dir: String) async throws {}
-    func deleteOutputVideo(at uri: String) async throws {}
-    func deleteThumbnail(at uri: String) async throws {}
-}
-
-private actor StubEntitlementCache: EntitlementCacheProtocol {
-    var isPurchased: Bool { false }
-    var productId: String? { nil }
-    var lastVerifiedAt: Date? { nil }
-    func setPurchased(_ purchased: Bool) async {}
-    func setProductId(_ id: String?) async {}
-    func setLastVerified(_ date: Date?) async {}
-}
-
-private struct StubVideoMetadataService: VideoMetadataServiceProtocol {
+private struct FakeVideoMetadataService: VideoMetadataServiceProtocol {
     func fetchMetadata(for videoURI: String) async throws -> VideoMetadata {
-        throw ImportVideoError.metadataFetchFailed("Video processing not available yet")
+        VideoMetadata(
+            uri: videoURI,
+            duration: 10.0,
+            resolution: CGSize(width: 1920, height: 1080),
+            fileSize: 1_000_000,
+            format: "mp4"
+        )
     }
+}
+
+private actor FakeStoreKitService: StoreKitServiceProtocol {
+    func purchase(productID: String) async -> PurchaseResult { .cancelled }
+    func restorePurchases() async -> RestoreResult { .notFound }
 }

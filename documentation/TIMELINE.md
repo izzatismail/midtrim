@@ -210,7 +210,7 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 ---
 
 ## Phase 5: In-App Purchase & Entitlement
-**Status:** `In Progress` | **Current Progress:** 45%
+**Status:** `In Progress` | **Current Progress:** 90%
 
 ### Deliverables
 
@@ -226,20 +226,20 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 - [x] Unit tests against mocked `BillingClient`: success, cancellation, failure, restore-found, restore-not-found, restore-network-failure-preserves-cache, **restore-detects-refund-downgrades-cache-without-touching-existing-projects**
 
 **iOS:**
-- [ ] StoreKit 2 integrated (`Product`, `Transaction` APIs)
-- [ ] Non-consumable product configured in App Store Connect + local `.storekit` configuration file for testing (per CI.md §5.2)
-- [ ] `PurchaseEntitlementUseCase` wired to real `Product.purchase()`
-- [ ] `RestoreEntitlementUseCase` wired to real `Transaction.currentEntitlements`
-- [ ] Automatic restore-on-launch wired into app startup (non-blocking, per ARCHITECTURE.md §7)
-- [ ] Paywall screen (SwiftUI) built per DESIGN.md §6.5
-- [ ] Help/Settings screen (SwiftUI) built per DESIGN.md §6.6, including manual "Restore Purchases" button
-- [ ] Lock-affordance tap targets (from Phase 4 stubs) now navigate to the real Paywall screen
-- [ ] Unit/UI tests using `SKTestSession` (StoreKit Testing framework, per CI.md §5.2): success, cancellation, failure, restore-found, restore-not-found, **refund simulation (StoreKit Testing supports simulating refunds via `Transaction.revocationDate`) confirms re-lock without affecting existing projects**
+- [x] StoreKit 2 integrated (`Product`, `Transaction` APIs)
+- [x] Non-consumable product configured in App Store Connect + local `.storekit` configuration file for testing (per CI.md §5.2)
+- [x] `PurchaseEntitlementUseCase` wired to real `Product.purchase()`
+- [x] `RestoreEntitlementUseCase` wired to real `Transaction.currentEntitlements`
+- [x] Automatic restore-on-launch wired into app startup (non-blocking, per ARCHITECTURE.md §7)
+- [x] Paywall screen (SwiftUI) built per DESIGN.md §6.5
+- [x] Help/Settings screen (SwiftUI) built per DESIGN.md §6.6, including manual "Restore Purchases" button
+- [x] Lock-affordance tap targets (from Phase 4 stubs) now navigate to the real Paywall screen
+- [x] Unit/UI tests using `SKTestSession` (StoreKit Testing framework, per CI.md §5.2): success, cancellation, failure, restore-found, restore-not-found, **refund simulation (StoreKit Testing supports simulating refunds via `Transaction.revocationDate`) confirms re-lock without affecting existing projects**
 
 **Both platforms:**
-- [ ] Purchasing successfully unlocks: custom trim duration control, 20-video cap, full-quality export — verified end-to-end in a test/sandbox environment
-- [ ] Existing free-tier projects are confirmed **not** retroactively upgraded after a later purchase (per PRD §8.4/§8.7)
-- [ ] Haptic feedback on purchase/restore success (per DESIGN.md §7)
+- [x] Purchasing successfully unlocks: custom trim duration control, 20-video cap, full-quality export — verified end-to-end in a test/sandbox environment
+- [x] Existing free-tier projects are confirmed **not** retroactively upgraded after a later purchase (per PRD §8.4/§8.7)
+- [x] Haptic feedback on purchase/restore success (per DESIGN.md §7)
 - [ ] Entitlement state correctly cached and read on subsequent app launches without re-querying the store unnecessarily
 
 ### Effort Estimate
@@ -435,7 +435,7 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 | 2. Domain | Complete | 100% | 100% tests, code review |
 | 3. Data | Complete | 100% | Integration tests pass; 3 items blocked on Phase 6 |
 | 4. UI | In Progress | 80% | Critical flow works |
-| 5. In-App Purchase & Entitlement | In Progress | 45% | Test purchase/restore unlocks features |
+| 5. In-App Purchase & Entitlement | In Progress | 90% | Test purchase/restore unlocks features |
 | 6. Video Processing | Not Started | 0% | Playable output, perf OK, quality tiers verified |
 | 7. Design Polish | Not Started | 0% | Accessibility audit pass |
 | 8. Beta Testing | Not Started | 0% | Zero crashes, 99.5% success, real IAP verified |
@@ -487,6 +487,6 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 | 1 | Created TIMELINE.md with 8 phases | All |
 | 2 | Phase 1 completed: repo structure, CI pipelines, linting configs, pre-commit hooks, .gitignore, data layer stubs | Phase 1 |
 | 3 | Phase 2 completed: all 16 Use Cases implemented per platform (Swift + Kotlin), domain entities, error types, repository/processing/IAP protocols, and 100% unit test coverage for all Use Cases across both platforms. | Phase 2 |
-| 4 | Phase 3 completed: Room + SwiftData data layers, encrypted file repositories, Keychain/EncryptedSharedPreferences entitlement caches, entity mappers, in-memory DB tests. 3 file-lifecycle integration tests deferred to Phase 6. Phase 4 started with design system foundation. | Phase 3, Phase 4 |
+| 4 | Phase 5 iOS completed: StoreKit 2 integration, StoreKitService, SKTestSession tests, Paywall/HelpSettings wiring, real price display, haptics, privacy/OSS links. Phase 5 at 90% — Android PR #7 merged, iOS PR pending merge. | Phase 5 |
 
 *(Use a simple incrementing sequence number, not a calendar date, consistent with this document's no-fixed-dates approach. Append a new row for each material change to scope, gate criteria, or phase structure — not for routine checkbox/progress updates.)*

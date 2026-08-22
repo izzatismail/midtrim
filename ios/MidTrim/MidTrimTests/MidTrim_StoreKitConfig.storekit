@@ -1,0 +1,29 @@
+{
+  "identifier" : "MidTrim StoreKit Config",
+  "nonConsumableProducts" : [
+    {
+      "description" : "One-time purchase that unlocks custom trim durations, full-quality exports, and up to 20 videos per project.",
+      "displayName" : "MidTrim Full Unlock",
+      "productID" : "com.midtrim.fullunlock",
+      "type" : "NON_CONSUMABLE"
+    }
+  ],
+  "settings" : {
+    "allowAutoRenewal" : true,
+    "localizations" : [
+      {
+        "description" : "One-time purchase that unlocks custom trim durations, full-quality exports, and up to 20 videos per project.",
+        "displayName" : "MidTrim Full Unlock",
+        "locale" : "en_US"
+      }
+    ],
+    "storefronts" : [
+      {
+        "id" : "143441",
+        "locale" : "en_US",
+        "name" : "United States"
+      }
+    ]
+  },
+  "version" : 1.0
+}

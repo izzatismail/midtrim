@@ -14,5 +14,5 @@ enum RestoreResult: Equatable {
 
 protocol StoreKitServiceProtocol {
     func purchase(productID: String) async -> PurchaseResult
-    func restorePurchases() async -> RestoreResult
+    func restorePurchases(productID: String) async -> RestoreResult
 }

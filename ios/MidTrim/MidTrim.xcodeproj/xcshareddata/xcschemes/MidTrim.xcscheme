@@ -71,6 +71,16 @@
             ReferencedContainer = "container:MidTrim.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <StoreKitConfigurationFileReference
+         identifier = "MidTrimTests/MidTrim_StoreKitConfig.storekit">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "A7BC12513010FB9200DD3606"
+            BuildableName = "MidTrim.app"
+            BlueprintName = "MidTrim"
+            ReferencedContainer = "container:MidTrim.xcodeproj">
+         </BuildableReference>
+      </StoreKitConfigurationFileReference>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

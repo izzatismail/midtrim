@@ -1,8 +1,8 @@
 # AGENTS.md — MidTrim Repo Guide
 
-## Repo state (July 2026)
+## Repo state (August 2026)
 
-Phase 1 of TIMELINE.md is **Complete** (100%). Phase 2 (Domain Layer & Use Cases) is now current. CI pipelines, linting configs, pre-commit hooks, root `.gitignore`, and data layer stubs (Room + SwiftData) are in place. Theme stubs still use placeholder colors — **not yet matching** DESIGN.md spec.
+Phase 4 is **In Progress** (80%); Phase 5 (IAP) is **In Progress** — Android 100% complete, iOS now has StoreKit 2 integrated (StoreKitService, .entitlements, .storekit config, Paywall/HelpSettings wiring, restore-on-launch, SKTestSession integration tests). Theme stubs still use placeholder colors — **not yet matching** DESIGN.md spec.
 
 ## Structure
 

@@ -189,7 +189,7 @@ struct MidTrimNavigation: View {
                         }
                     },
                     onLicenses: {
-                        if let url = URL(string: "https://open.fontlicense.org") {
+                        if let url = URL(string: "https://scripts.sil.org/OFL") {
                             UIApplication.shared.open(url)
                         }
                     },
@@ -199,8 +199,17 @@ struct MidTrimNavigation: View {
             }
         }
         .task {
-            let restore = RestoreEntitlementUseCase(storeService: storeService, cache: cache)
-            _ = await restore.execute()
+            async let priceTask = storeService.fetchPrice()
+            async let restoreTask = RestoreEntitlementUseCase(storeService: storeService, cache: cache).execute()
+
+            if let price = await priceTask {
+                paywallPrice = price
+            }
+            let restoreResult = await restoreTask
+            if restoreResult == .found {
+                projectListViewModel.loadProjects()
+                videoSelectionViewModel.initialize()
+            }
         }
     }
 

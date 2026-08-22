@@ -83,7 +83,7 @@ final class MockStoreKitService: StoreKitServiceProtocol {
         purchaseResult
     }
 
-    func restorePurchases() async -> RestoreResult {
+    func restorePurchases(productID: String) async -> RestoreResult {
         restoreResult
     }
 }

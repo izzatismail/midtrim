@@ -1,12 +1,6 @@
 import StoreKit
 
 actor StoreKitService: StoreKitServiceProtocol {
-    private let productID: String
-
-    init(productID: String = "com.midtrim.fullunlock") {
-        self.productID = productID
-    }
-
     func purchase(productID: String) async -> PurchaseResult {
         guard let product = try? await Product.products(for: [productID]).first else {
             return .failed("Product not found")
@@ -37,7 +31,7 @@ actor StoreKitService: StoreKitServiceProtocol {
         }
     }
 
-    func restorePurchases() async -> RestoreResult {
+    func restorePurchases(productID: String) async -> RestoreResult {
         var found = false
         for await verification in Transaction.currentEntitlements {
             switch verification {
@@ -52,8 +46,8 @@ actor StoreKitService: StoreKitServiceProtocol {
         return found ? .found : .notFound
     }
 
-    func fetchProductPrice(productID: String) async -> String? {
-        guard let product = try? await Product.products(for: [productID]).first else {
+    func fetchPrice() async -> String? {
+        guard let product = try? await Product.products(for: ["com.midtrim.fullunlock"]).first else {
             return nil
         }
         return product.displayPrice

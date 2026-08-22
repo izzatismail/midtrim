@@ -18,10 +18,14 @@ struct MidTrimNavigation: View {
     @State private var path = [AppRoute]()
     @State private var showPaywall = false
     @State private var showSettings = false
+    @State private var paywallIsLoading = false
+    @State private var paywallError: String?
+    @State private var paywallPrice = "$5.00"
+    @State private var settingsRestoreResult: String?
 
     private let projectListViewModel: ProjectListViewModel
     private let videoSelectionViewModel: VideoSelectionViewModel
-    private let storeService: FakeStoreKitService
+    private let storeService: StoreKitService
     private let cache: KeychainEntitlementCache
 
     init(modelContainer: ModelContainer) {
@@ -29,7 +33,7 @@ struct MidTrimNavigation: View {
         let fileRepo = DefaultVideoFileRepository()
         let cache = KeychainEntitlementCache()
         let metadataService = FakeVideoMetadataService()
-        let storeService = FakeStoreKitService()
+        let storeService = StoreKitService()
 
         self.storeService = storeService
         self.cache = cache
@@ -104,15 +108,105 @@ struct MidTrimNavigation: View {
             }
         }
         .sheet(isPresented: $showPaywall) {
-            PaywallScreen(onPurchase: { }, onRestore: { }, onDismiss: { showPaywall = false })
+            PaywallScreen(
+                price: paywallPrice,
+                onPurchase: {
+                    paywallError = nil
+                    paywallIsLoading = true
+                    Task { @MainActor in
+                        let purchase = PurchaseEntitlementUseCase(
+                            storeService: storeService,
+                            cache: cache
+                        )
+                        let result = await purchase.execute()
+                        paywallIsLoading = false
+                        switch result {
+                        case .success:
+                            triggerHaptic(.success)
+                            showPaywall = false
+                            projectListViewModel.loadProjects()
+                            videoSelectionViewModel.initialize()
+                        case .cancelled:
+                            paywallError = "Purchase cancelled"
+                        case .failed(let msg):
+                            paywallError = msg
+                        }
+                    }
+                },
+                onRestore: {
+                    paywallError = nil
+                    paywallIsLoading = true
+                    Task { @MainActor in
+                        let restore = RestoreEntitlementUseCase(
+                            storeService: storeService,
+                            cache: cache
+                        )
+                        let result = await restore.execute()
+                        paywallIsLoading = false
+                        switch result {
+                        case .found:
+                            triggerHaptic(.success)
+                            showPaywall = false
+                            projectListViewModel.loadProjects()
+                            videoSelectionViewModel.initialize()
+                        case .notFound:
+                            paywallError = "No purchases found to restore"
+                        case .failed:
+                            paywallError = "Restore failed. Please try again."
+                        }
+                    }
+                },
+                onDismiss: { showPaywall = false },
+                isLoading: paywallIsLoading,
+                error: paywallError
+            )
         }
         .sheet(isPresented: $showSettings) {
-            NavigationStack { HelpSettingsScreen(onRestore: { }, onDismiss: { showSettings = false }) }
+            NavigationStack {
+                HelpSettingsScreen(
+                    onRestore: {
+                        settingsRestoreResult = nil
+                        Task { @MainActor in
+                            let restore = RestoreEntitlementUseCase(
+                                storeService: storeService,
+                                cache: cache
+                            )
+                            let result = await restore.execute()
+                            switch result {
+                            case .found:
+                                triggerHaptic(.success)
+                                settingsRestoreResult = "Purchases restored"
+                            case .notFound:
+                                settingsRestoreResult = "No purchases found to restore"
+                            case .failed:
+                                settingsRestoreResult = "Restore failed. Please try again."
+                            }
+                        }
+                    },
+                    onPrivacyPolicy: {
+                        if let url = URL(string: "https://www.example.com/privacy") {
+                            UIApplication.shared.open(url)
+                        }
+                    },
+                    onLicenses: {
+                        if let url = URL(string: "https://open.fontlicense.org") {
+                            UIApplication.shared.open(url)
+                        }
+                    },
+                    onDismiss: { showSettings = false },
+                    restoreResult: settingsRestoreResult
+                )
+            }
         }
         .task {
             let restore = RestoreEntitlementUseCase(storeService: storeService, cache: cache)
             _ = await restore.execute()
         }
+    }
+
+    private func triggerHaptic(_ style: UINotificationFeedbackGenerator.FeedbackType) {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(style)
     }
 }
 
@@ -126,9 +220,4 @@ private struct FakeVideoMetadataService: VideoMetadataServiceProtocol {
             format: "mp4"
         )
     }
-}
-
-private actor FakeStoreKitService: StoreKitServiceProtocol {
-    func purchase(productID: String) async -> PurchaseResult { .cancelled }
-    func restorePurchases() async -> RestoreResult { .notFound }
 }

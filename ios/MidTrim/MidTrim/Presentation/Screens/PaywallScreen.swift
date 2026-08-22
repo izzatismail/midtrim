@@ -1,13 +1,15 @@
 import SwiftUI
 
 struct PaywallScreen: View {
+    let price: String
     let onPurchase: () -> Void
     let onRestore: () -> Void
     let onDismiss: () -> Void
     let isLoading: Bool
     let error: String?
 
-    init(onPurchase: @escaping () -> Void, onRestore: @escaping () -> Void, onDismiss: @escaping () -> Void, isLoading: Bool = false, error: String? = nil) {
+    init(price: String = "$5.00", onPurchase: @escaping () -> Void, onRestore: @escaping () -> Void, onDismiss: @escaping () -> Void, isLoading: Bool = false, error: String? = nil) {
+        self.price = price
         self.onPurchase = onPurchase
         self.onRestore = onRestore
         self.onDismiss = onDismiss
@@ -26,7 +28,7 @@ struct PaywallScreen: View {
                     BenefitRow(text: "Up to 20 videos per project")
                 }
                 .padding(.horizontal, AppSpacing.md)
-                Text("$5.00 — one-time purchase").font(.body).foregroundColor(.textSecondary)
+                Text("\(price) — one-time purchase").font(.body).foregroundColor(.textSecondary)
                 Button(action: onPurchase) {
                     if isLoading {
                         ProgressView()

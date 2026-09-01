@@ -1,12 +1,13 @@
 name: Android CI
 
 on:
-  push:
-    branches: ["feat/**", "fix/**", "chore/**"]
-    paths: ["android/**"]
   pull_request:
     branches: ["main"]
     paths: ["android/**"]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build-and-test:

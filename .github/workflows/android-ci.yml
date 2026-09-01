@@ -17,10 +17,20 @@ jobs:
         working-directory: android
     steps:
       - uses: actions/checkout@v4
+      - name: Resolve JDK version from Gradle wrapper
+        id: jdk
+        run: |
+          GRADLE_VERSION=$(grep "^distributionUrl" gradle/wrapper/gradle-wrapper.properties \
+            | grep -oE "[0-9]+\.[0-9]+" | head -1)
+          MAJOR=${GRADLE_VERSION%%.*}
+          if [ "$MAJOR" -ge 9 ]; then echo "jdk=17" >> "$GITHUB_OUTPUT"
+          elif [ "$MAJOR" -ge 8 ]; then echo "jdk=17" >> "$GITHUB_OUTPUT"
+          elif [ "$MAJOR" -ge 7 ]; then echo "jdk=16" >> "$GITHUB_OUTPUT"
+          else echo "jdk=11" >> "$GITHUB_OUTPUT"; fi
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "17"
+          java-version: ${{ steps.jdk.outputs.jdk }}
       - uses: gradle/actions/setup-gradle@v4
       - name: Lint
         run: ./gradlew ktlintCheck detekt

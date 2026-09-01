@@ -310,7 +310,7 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 *Governing rules for this phase: RULES.md §3 (native development rules), §4 (no partial/silent merges).*
 
 ### Blockers / Notes
-- (None yet)
+- Paid-tier "Custom" trim duration is currently hardcoded to 4.0s in both platforms' navigation wiring (`MainActivity.kt` and `ContentView.swift`). This was a Phase 4 stub that was never replaced with a proper stepper/input per DESIGN.md §6.3. **Must be fixed in Phase 6** — paid users must be able to select any duration 1.0–5.0s.
 
 ---
 

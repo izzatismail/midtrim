@@ -6,7 +6,7 @@ enum ExportQualityPreset: String, CaseIterable {
     case balanced = "Balanced"
     case best = "Best"
 
-    var maxHeight: Int {
+    private var maxHeight: Int {
         switch self {
         case .small: return 720
         case .balanced: return 1080

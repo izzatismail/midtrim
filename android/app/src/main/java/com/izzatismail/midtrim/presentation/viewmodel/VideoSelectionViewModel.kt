@@ -22,7 +22,9 @@ data class VideoSelectionUiState(
     val isLoading: Boolean = false,
     val importError: String? = null,
     val selectedQualityPreset: ExportQualityPreset = ExportQualityPreset.BEST,
-    val availableQualityPresets: List<ExportQualityPreset> = emptyList()
+    val availableQualityPresets: List<ExportQualityPreset> = emptyList(),
+    val sourceWidth: Int = 1920,
+    val sourceHeight: Int = 1080
 )
 
 class VideoSelectionViewModel(
@@ -42,10 +44,13 @@ class VideoSelectionViewModel(
     fun initialize() {
         viewModelScope.launch {
             val isPaid = fetchEntitlementStatusUseCase.isPaidUser
-            val sourceHeight = _uiState.value.selectedVideos
-                .maxOfOrNull { it.resolutionHeight } ?: 1080
+            val videos = _uiState.value.selectedVideos
+            val sourceWidth = videos.maxOfOrNull { it.resolutionWidth } ?: 1920
+            val sourceHeight = videos.maxOfOrNull { it.resolutionHeight } ?: 1080
             _uiState.value = _uiState.value.copy(
                 isPaidUser = isPaid,
+                sourceWidth = sourceWidth,
+                sourceHeight = sourceHeight,
                 availableQualityPresets = ExportQualityPreset.availableFor(sourceHeight)
             )
         }
@@ -62,10 +67,15 @@ class VideoSelectionViewModel(
                 val merged = calculateMergedDurationUseCase.execute(
                     _uiState.value.trimDuration, all.size
                 )
+                val sourceWidth = all.maxOfOrNull { it.resolutionWidth } ?: 1920
+                val sourceHeight = all.maxOfOrNull { it.resolutionHeight } ?: 1080
                 _uiState.value = _uiState.value.copy(
                     selectedVideos = all,
                     mergedDuration = merged,
-                    isLoading = false
+                    isLoading = false,
+                    sourceWidth = sourceWidth,
+                    sourceHeight = sourceHeight,
+                    availableQualityPresets = ExportQualityPreset.availableFor(sourceHeight)
                 )
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(

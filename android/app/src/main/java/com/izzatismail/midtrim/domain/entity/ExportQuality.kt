@@ -2,12 +2,11 @@ package com.izzatismail.midtrim.domain.entity
 
 enum class ExportQualityPreset(
     val label: String,
-    val subtitle: String,
-    val maxHeight: Int
+    private val maxHeight: Int
 ) {
-    SMALL("Small", "Quick share · 720p", 720),
-    BALANCED("Balanced", "Good quality · 1080p", 1080),
-    BEST("Best", "Source quality", Int.MAX_VALUE);
+    SMALL("Small", 720),
+    BALANCED("Balanced", 1080),
+    BEST("Best", Int.MAX_VALUE);
 
     fun effectiveMaxHeight(sourceHeight: Int): Int =
         if (this == BEST) sourceHeight else minOf(maxHeight, sourceHeight)

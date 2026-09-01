@@ -2,6 +2,7 @@ package com.izzatismail.midtrim.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.izzatismail.midtrim.domain.entity.ExportQualityPreset
 import com.izzatismail.midtrim.domain.entity.VideoMetadata
 import com.izzatismail.midtrim.domain.usecase.CalculateMergedDurationUseCase
 import com.izzatismail.midtrim.domain.usecase.FetchEntitlementStatusUseCase
@@ -19,7 +20,11 @@ data class VideoSelectionUiState(
     val mergedDuration: Double = 0.0,
     val isPaidUser: Boolean = false,
     val isLoading: Boolean = false,
-    val importError: String? = null
+    val importError: String? = null,
+    val selectedQualityPreset: ExportQualityPreset = ExportQualityPreset.BEST,
+    val availableQualityPresets: List<ExportQualityPreset> = emptyList(),
+    val sourceWidth: Int = 1920,
+    val sourceHeight: Int = 1080
 )
 
 class VideoSelectionViewModel(
@@ -39,7 +44,15 @@ class VideoSelectionViewModel(
     fun initialize() {
         viewModelScope.launch {
             val isPaid = fetchEntitlementStatusUseCase.isPaidUser
-            _uiState.value = _uiState.value.copy(isPaidUser = isPaid)
+            val videos = _uiState.value.selectedVideos
+            val sourceWidth = videos.maxOfOrNull { it.resolutionWidth } ?: 1920
+            val sourceHeight = videos.maxOfOrNull { it.resolutionHeight } ?: 1080
+            _uiState.value = _uiState.value.copy(
+                isPaidUser = isPaid,
+                sourceWidth = sourceWidth,
+                sourceHeight = sourceHeight,
+                availableQualityPresets = ExportQualityPreset.availableFor(sourceHeight)
+            )
         }
     }
 
@@ -54,10 +67,15 @@ class VideoSelectionViewModel(
                 val merged = calculateMergedDurationUseCase.execute(
                     _uiState.value.trimDuration, all.size
                 )
+                val sourceWidth = all.maxOfOrNull { it.resolutionWidth } ?: 1920
+                val sourceHeight = all.maxOfOrNull { it.resolutionHeight } ?: 1080
                 _uiState.value = _uiState.value.copy(
                     selectedVideos = all,
                     mergedDuration = merged,
-                    isLoading = false
+                    isLoading = false,
+                    sourceWidth = sourceWidth,
+                    sourceHeight = sourceHeight,
+                    availableQualityPresets = ExportQualityPreset.availableFor(sourceHeight)
                 )
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(
@@ -101,6 +119,10 @@ class VideoSelectionViewModel(
                 mergedDuration = merged
             )
         }
+    }
+
+    fun setQualityPreset(preset: ExportQualityPreset) {
+        _uiState.value = _uiState.value.copy(selectedQualityPreset = preset)
     }
 
     fun clearImportError() {

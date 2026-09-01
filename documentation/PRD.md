@@ -15,7 +15,7 @@ Users often want to extract the "best moment" from a longer video without comple
 - Allow users to select **multiple source videos** in a single project (**up to 10 free, up to 20 paid**), all trimmed to the same duration and merged into one output clip, in a user-defined order.
 - Allow users to save trims as **named projects** for later reference.
 - Keep everything **on-device** — no custom accounts, no cloud sync, no network calls beyond the platform's native purchase/restore flow.
-- Ensure exported videos are high quality and ready to share on social platforms — **capped at 720p free**, **up to original resolution (1080p/4K) with the paid unlock**.
+- Ensure exported videos are high quality and ready to share on social platforms — **capped at 720p free**, **selectable quality presets (Small/Balanced/Best) up to original resolution (1080p/4K) with the paid unlock**.
 - Offer a **single, affordable one-time purchase** (target: USD $5.00) to unlock the full feature set — no subscriptions, no recurring billing, no tiered pricing in MVP.
 
 ## 4. Free vs. Paid Tier (In-App Purchase)
@@ -133,7 +133,7 @@ Users often want to extract the "best moment" from a longer video without comple
 
 ### 8.6 Export Quality Tiers
 - **Free tier**: merged output is encoded/capped at **720p**, regardless of source resolution.
-- **Paid tier**: merged output is encoded at **up to the source video's original resolution** (e.g., 1080p, 4K, or whatever the source provides) — no upscaling beyond source resolution.
+- **Paid tier**: merged output is encoded at a user-selectable quality preset: Small (720p), Balanced (1080p, if source >1080p), or Best (up to source resolution, no upscaling).
 - Quality tier is determined by entitlement status **at the time of export/save**, not retroactively applied to previously saved projects.
 - If a free-tier user attempts to change an export-quality-related setting beyond 720p (should such a setting be exposed in UI), the control is disabled with a lock affordance; tapping it opens the paywall (see Section 4.4).
 

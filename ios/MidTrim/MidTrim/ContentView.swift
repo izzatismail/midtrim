@@ -87,6 +87,10 @@ struct MidTrimNavigation: View {
                     TrimDurationScreen(
                         selectedDuration: videoSelectionViewModel.uiState.trimDuration,
                         isPaidUser: isPaid,
+                        availablePresets: videoSelectionViewModel.uiState.availableQualityPresets,
+                        selectedPreset: videoSelectionViewModel.uiState.selectedQualityPreset,
+                        sourceWidth: videoSelectionViewModel.uiState.sourceWidth,
+                        sourceHeight: videoSelectionViewModel.uiState.sourceHeight,
                         onDurationSelected: { videoSelectionViewModel.setTrimDuration($0) },
                         onCustomTap: {
                             if isPaid {
@@ -95,6 +99,7 @@ struct MidTrimNavigation: View {
                                 showPaywall = true
                             }
                         },
+                        onQualityPresetSelected: { videoSelectionViewModel.setQualityPreset($0) },
                         onContinue: { path.append(.nameProject) },
                         onBack: { path.removeLast() }
                     )

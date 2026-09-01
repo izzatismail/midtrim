@@ -203,6 +203,10 @@ private fun MidTrimApp(activity: MainActivity) {
             TrimDurationScreen(
                 selectedDuration = uiState.trimDuration,
                 isPaidUser = uiState.isPaidUser,
+                availableQualityPresets = uiState.availableQualityPresets,
+                selectedQualityPreset = uiState.selectedQualityPreset,
+                sourceWidth = uiState.sourceWidth,
+                sourceHeight = uiState.sourceHeight,
                 onDurationSelected = { videoSelectionViewModel.setTrimDuration(it) },
                 onCustomTap = {
                     if (uiState.isPaidUser) {
@@ -211,6 +215,7 @@ private fun MidTrimApp(activity: MainActivity) {
                         navController.navigate(Route.Paywall.route)
                     }
                 },
+                onQualityPresetSelected = { videoSelectionViewModel.setQualityPreset(it) },
                 onContinue = { navController.navigate(Route.NameProject.route) },
                 onBack = { navController.popBackStack() }
             )

@@ -21,7 +21,7 @@ Represents a single saved project. A project now holds **merge-level** metadata;
 | `wasCustomDuration` | Boolean | Non-null | Whether this project's `trimDuration` was a custom paid-tier value (`true`) or one of the fixed free-tier options (`false`) — denormalized for quick display/audit without re-deriving from the raw value. |
 | `outputVideoURI` | String (URI/path) | Non-null | Path to the encrypted, single **merged** output file in local storage |
 | `thumbnailURI` | String (URI/path) | Non-null | Path to a small JPEG thumbnail image, extracted from the **first frame (t=0) of the merged output video** at creation time. Stored as a standalone file (not inline/base64 in the DB) to keep row size small and avoid complicating encryption. Used for the Projects List screen (DESIGN.md §6.1). See ARCHITECTURE.md §5.2 for the extraction strategy. |
-| `exportQualityTier` | String (enum: `"free_720p"`, `"paid_original"`) | Non-null | The export quality tier that was actually applied when this project was created — recorded permanently since purchasing later does not retroactively re-process existing projects (per PRD §8.4). |
+| `exportQualityTier` | String (enum: `"free_720p"`, `"paid_720p"`, `"paid_1080p"`, `"paid_original"`) | Non-null | The export quality tier that was actually applied when this project was created — recorded permanently since purchasing later does not retroactively re-process existing projects (per PRD §8.4). Free tier always produces `"free_720p"`. Paid tier records the user's chosen preset: `"paid_720p"` (Small), `"paid_1080p"` (Balanced), or `"paid_original"` (Best). |
 | `mergedDuration` | Double (seconds) | Non-null | Total duration of the merged output (`trimDuration × videoCount`), stored for quick display without recomputation |
 | `videoCount` | Integer | Non-null, 1–20 | Number of source videos in this project (denormalized for quick list display). Range is 1–10 for projects created under free tier, 1–20 for projects created under paid tier — enforced at the domain layer at creation time, not by a DB constraint (see Section 4). |
 | `createdAt` | Timestamp (ISO 8601 / Date) | Non-null | Project creation date/time |
@@ -83,7 +83,7 @@ final class Project {
     var wasCustomDuration: Bool
     var outputVideoURI: String
     var thumbnailURI: String
-    var exportQualityTier: String // "free_720p" | "paid_original"
+    var exportQualityTier: String // "free_720p" | "paid_720p" | "paid_1080p" | "paid_original"
     var mergedDuration: Double
     var videoCount: Int
     var createdAt: Date

@@ -28,6 +28,12 @@ class VideoSelectionViewModel: ObservableObject {
     func initialize() {
         Task { @MainActor in
             uiState.isPaidUser = await fetchEntitlementStatusUseCase.isPaidUser
+            let videos = uiState.selectedVideos
+            let sourceWidth = videos.map { Int($0.resolution.width) }.max() ?? 1920
+            let sourceHeight = videos.map { Int($0.resolution.height) }.max() ?? 1080
+            uiState.sourceWidth = sourceWidth
+            uiState.sourceHeight = sourceHeight
+            uiState.availableQualityPresets = ExportQualityPreset.availableFor(sourceHeight: sourceHeight)
         }
     }
 
@@ -43,6 +49,11 @@ class VideoSelectionViewModel: ObservableObject {
                     trimDuration: uiState.trimDuration,
                     videoCount: uiState.selectedVideos.count
                 )
+                let sourceWidth = uiState.selectedVideos.map { Int($0.resolution.width) }.max() ?? 1920
+                let sourceHeight = uiState.selectedVideos.map { Int($0.resolution.height) }.max() ?? 1080
+                uiState.sourceWidth = sourceWidth
+                uiState.sourceHeight = sourceHeight
+                uiState.availableQualityPresets = ExportQualityPreset.availableFor(sourceHeight: sourceHeight)
                 uiState.isLoading = false
             } catch {
                 uiState.isLoading = false
@@ -75,6 +86,10 @@ class VideoSelectionViewModel: ObservableObject {
             videoCount: uiState.selectedVideos.count
         )
     }
+
+    func setQualityPreset(_ preset: ExportQualityPreset) {
+        uiState.selectedQualityPreset = preset
+    }
 }
 
 struct VideoSelectionUiState {
@@ -84,4 +99,8 @@ struct VideoSelectionUiState {
     var isPaidUser = false
     var isLoading = false
     var importError: String?
+    var selectedQualityPreset: ExportQualityPreset = .best
+    var availableQualityPresets: [ExportQualityPreset] = []
+    var sourceWidth: Int = 1920
+    var sourceHeight: Int = 1080
 }

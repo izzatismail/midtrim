@@ -9,12 +9,12 @@ struct MergeVideoSegmentsUseCase {
         self.qualityResolver = qualityResolver
     }
 
-    func execute(segmentURIs: [String], isPaidUser: Bool, sourceResolution: CGSize) async throws -> String {
+    func execute(segmentURIs: [String], isPaidUser: Bool, qualityPreset: ExportQualityPreset?, sourceResolution: CGSize) async throws -> String {
         guard !segmentURIs.isEmpty else {
             throw TrimError.mergeFailed("No segments to merge.")
         }
 
-        let quality = qualityResolver.execute(isPaidUser: isPaidUser, sourceResolution: sourceResolution)
+        let quality = qualityResolver.execute(isPaidUser: isPaidUser, preset: qualityPreset, sourceResolution: sourceResolution)
         return try await trimmer.merge(segmentURIs: segmentURIs, outputQuality: quality)
     }
 }

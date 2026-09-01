@@ -1,6 +1,7 @@
 package com.izzatismail.midtrim.domain.usecase
 
 import com.izzatismail.midtrim.domain.entity.ExportQuality
+import com.izzatismail.midtrim.domain.entity.ExportQualityPreset
 import com.izzatismail.midtrim.domain.entity.VideoMetadata
 import com.izzatismail.midtrim.domain.repository.FrameExtractor
 import com.izzatismail.midtrim.domain.repository.VideoMetadataService
@@ -115,7 +116,23 @@ class MergeVideoSegmentsUseCaseTest {
     fun `merge success`() = runBlocking {
         val trimmer = FakeVideoTrimmer()
         val useCase = MergeVideoSegmentsUseCase(trimmer, ResolveExportQualityUseCase())
-        val result = useCase.execute(listOf("s1.mp4", "s2.mp4"), false, 1920, 1080)
+        val result = useCase.execute(listOf("s1.mp4", "s2.mp4"), false, null, 1920, 1080)
+        assertEquals("merged.mp4", result)
+    }
+
+    @Test
+    fun `merge success with paid BEST preset`() = runBlocking {
+        val trimmer = FakeVideoTrimmer()
+        val useCase = MergeVideoSegmentsUseCase(trimmer, ResolveExportQualityUseCase())
+        val result = useCase.execute(listOf("s1.mp4", "s2.mp4"), true, ExportQualityPreset.BEST, 1920, 1080)
+        assertEquals("merged.mp4", result)
+    }
+
+    @Test
+    fun `merge success with paid SMALL preset`() = runBlocking {
+        val trimmer = FakeVideoTrimmer()
+        val useCase = MergeVideoSegmentsUseCase(trimmer, ResolveExportQualityUseCase())
+        val result = useCase.execute(listOf("s1.mp4", "s2.mp4"), true, ExportQualityPreset.SMALL, 1920, 1080)
         assertEquals("merged.mp4", result)
     }
 
@@ -124,7 +141,7 @@ class MergeVideoSegmentsUseCaseTest {
         val trimmer = FakeVideoTrimmer()
         val useCase = MergeVideoSegmentsUseCase(trimmer, ResolveExportQualityUseCase())
         try {
-            useCase.execute(emptyList(), false, 1920, 1080)
+            useCase.execute(emptyList(), false, null, 1920, 1080)
             throw AssertionError("Expected MergeFailed")
         } catch (e: com.izzatismail.midtrim.domain.error.TrimError.MergeFailed) { }
     }

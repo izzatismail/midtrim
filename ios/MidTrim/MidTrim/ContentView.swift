@@ -84,9 +84,17 @@ struct MidTrimNavigation: View {
                     )
                 case .trimDuration:
                     let isPaid = videoSelectionViewModel.uiState.isPaidUser
+                    let sourceWidth = videoSelectionViewModel.uiState.selectedVideos
+                        .map { Int($0.resolution.width) }.max() ?? 1920
+                    let sourceHeight = videoSelectionViewModel.uiState.selectedVideos
+                        .map { Int($0.resolution.height) }.max() ?? 1080
                     TrimDurationScreen(
                         selectedDuration: videoSelectionViewModel.uiState.trimDuration,
                         isPaidUser: isPaid,
+                        availablePresets: videoSelectionViewModel.uiState.availableQualityPresets,
+                        selectedPreset: videoSelectionViewModel.uiState.selectedQualityPreset,
+                        sourceWidth: sourceWidth,
+                        sourceHeight: sourceHeight,
                         onDurationSelected: { videoSelectionViewModel.setTrimDuration($0) },
                         onCustomTap: {
                             if isPaid {
@@ -95,6 +103,7 @@ struct MidTrimNavigation: View {
                                 showPaywall = true
                             }
                         },
+                        onQualityPresetSelected: { videoSelectionViewModel.setQualityPreset($0) },
                         onContinue: { path.append(.nameProject) },
                         onBack: { path.removeLast() }
                     )

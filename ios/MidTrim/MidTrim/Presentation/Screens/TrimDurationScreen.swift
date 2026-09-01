@@ -3,8 +3,13 @@ import SwiftUI
 struct TrimDurationScreen: View {
     let selectedDuration: Double
     let isPaidUser: Bool
+    let availablePresets: [ExportQualityPreset]
+    let selectedPreset: ExportQualityPreset
+    let sourceWidth: Int
+    let sourceHeight: Int
     let onDurationSelected: (Double) -> Void
     let onCustomTap: () -> Void
+    let onQualityPresetSelected: (ExportQualityPreset) -> Void
     let onContinue: () -> Void
     let onBack: () -> Void
 
@@ -36,7 +41,7 @@ struct TrimDurationScreen: View {
                 .cornerRadius(AppSpacing.cornerButton)
             }
             .padding(.horizontal, AppSpacing.md)
-            qualityBadge
+            qualitySelector
             Spacer()
             Button("Preview Trim", action: onContinue)
                 .buttonStyle(.borderedProminent).tint(.accentPrimary)
@@ -51,17 +56,42 @@ struct TrimDurationScreen: View {
         }
     }
 
-    private var qualityBadge: some View {
-        Button(action: isPaidUser ? {} : onCustomTap) {
-            HStack(spacing: AppSpacing.xs) {
-                Text(isPaidUser ? "Original Quality" : "720p").font(.body)
-                if !isPaidUser { Text("🔒") }
+    @ViewBuilder
+    private var qualitySelector: some View {
+        if isPaidUser {
+            VStack(alignment: .leading, spacing: AppSpacing.xs) {
+                Text("Export Quality").font(.bodyLarge).padding(.horizontal, AppSpacing.md)
+                ForEach(availablePresets, id: \.self) { preset in
+                    Button { onQualityPresetSelected(preset) } label: {
+                        HStack {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(preset.rawValue).font(.body)
+                                Text(preset.subtitle(sourceWidth: sourceWidth, sourceHeight: sourceHeight))
+                                    .font(.caption).foregroundColor(.textSecondary)
+                            }
+                            Spacer()
+                            if preset == selectedPreset {
+                                Image(systemName: "checkmark").foregroundColor(.accentPrimary)
+                            }
+                        }
+                        .padding(AppSpacing.md)
+                        .background(preset == selectedPreset ? Color.accentPrimary.opacity(0.15) : Color.bgSurface)
+                        .cornerRadius(AppSpacing.cornerButton)
+                    }
+                    .padding(.horizontal, AppSpacing.md)
+                }
             }
-            .padding(.horizontal, AppSpacing.md).padding(.vertical, AppSpacing.sm)
-            .background(Color.bgSurface)
-            .foregroundColor(isPaidUser ? .textSecondary : .premiumAccent)
-            .cornerRadius(AppSpacing.cornerButton)
+        } else {
+            Button(action: onCustomTap) {
+                HStack(spacing: AppSpacing.xs) {
+                    Text("720p").font(.body)
+                    Text("🔒")
+                }
+                .padding(.horizontal, AppSpacing.md).padding(.vertical, AppSpacing.sm)
+                .background(Color.bgSurface)
+                .foregroundColor(.premiumAccent)
+                .cornerRadius(AppSpacing.cornerButton)
+            }
         }
-        .disabled(isPaidUser)
     }
 }

@@ -144,7 +144,7 @@ Design principles:
   - **Paid tier**: tapping "Custom" reveals a simple numeric stepper/input (1–5s, in 0.1s or whole-second increments — exact granularity is an implementation detail, not fixed here) instead of a fixed value.
 - A small **quality indicator** near the preview (e.g., a subtle "720p" or "HD" badge) shows the export quality that will apply:
   - **Free tier**: always shows "720p," with a tappable **lock icon** next to it (`premium-accent`) that opens the Paywall screen, explaining the higher-quality unlock.
-  - **Paid tier**: shows the actual resolution being used (e.g., "1080p," "4K"), no lock icon.
+  - **Paid tier**: shows a **quality selector** with three intent-based presets: **Small** ("Quick share · 720p"), **Balanced** ("Good quality · 1080p", shown only if source >1080p), and **Best** ("Source quality · {resolution}"). Each preset displays a brief label + subtitle. The selected preset is highlighted. Default is Best (source resolution, matching the original behaviour).
 - Single primary CTA at bottom: "Preview Trim" → "Save Project."
 - No nested menus, no settings icons on this screen — keep it single-purpose.
 

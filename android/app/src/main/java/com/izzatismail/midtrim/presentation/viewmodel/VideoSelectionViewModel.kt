@@ -2,6 +2,7 @@ package com.izzatismail.midtrim.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.izzatismail.midtrim.domain.entity.ExportQualityPreset
 import com.izzatismail.midtrim.domain.entity.VideoMetadata
 import com.izzatismail.midtrim.domain.usecase.CalculateMergedDurationUseCase
 import com.izzatismail.midtrim.domain.usecase.FetchEntitlementStatusUseCase
@@ -19,7 +20,9 @@ data class VideoSelectionUiState(
     val mergedDuration: Double = 0.0,
     val isPaidUser: Boolean = false,
     val isLoading: Boolean = false,
-    val importError: String? = null
+    val importError: String? = null,
+    val selectedQualityPreset: ExportQualityPreset = ExportQualityPreset.BEST,
+    val availableQualityPresets: List<ExportQualityPreset> = emptyList()
 )
 
 class VideoSelectionViewModel(
@@ -39,7 +42,12 @@ class VideoSelectionViewModel(
     fun initialize() {
         viewModelScope.launch {
             val isPaid = fetchEntitlementStatusUseCase.isPaidUser
-            _uiState.value = _uiState.value.copy(isPaidUser = isPaid)
+            val sourceHeight = _uiState.value.selectedVideos
+                .maxOfOrNull { it.resolutionHeight } ?: 1080
+            _uiState.value = _uiState.value.copy(
+                isPaidUser = isPaid,
+                availableQualityPresets = ExportQualityPreset.availableFor(sourceHeight)
+            )
         }
     }
 
@@ -101,6 +109,10 @@ class VideoSelectionViewModel(
                 mergedDuration = merged
             )
         }
+    }
+
+    fun setQualityPreset(preset: ExportQualityPreset) {
+        _uiState.value = _uiState.value.copy(selectedQualityPreset = preset)
     }
 
     fun clearImportError() {

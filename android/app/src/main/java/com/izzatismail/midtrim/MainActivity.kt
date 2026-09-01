@@ -200,9 +200,15 @@ private fun MidTrimApp(activity: MainActivity) {
         }
         composable(Route.TrimDuration.route) {
             val uiState by videoSelectionViewModel.uiState.collectAsState()
+            val sourceWidth = uiState.selectedVideos.maxOfOrNull { it.resolutionWidth } ?: 1920
+            val sourceHeight = uiState.selectedVideos.maxOfOrNull { it.resolutionHeight } ?: 1080
             TrimDurationScreen(
                 selectedDuration = uiState.trimDuration,
                 isPaidUser = uiState.isPaidUser,
+                availableQualityPresets = uiState.availableQualityPresets,
+                selectedQualityPreset = uiState.selectedQualityPreset,
+                sourceWidth = sourceWidth,
+                sourceHeight = sourceHeight,
                 onDurationSelected = { videoSelectionViewModel.setTrimDuration(it) },
                 onCustomTap = {
                     if (uiState.isPaidUser) {
@@ -211,6 +217,7 @@ private fun MidTrimApp(activity: MainActivity) {
                         navController.navigate(Route.Paywall.route)
                     }
                 },
+                onQualityPresetSelected = { videoSelectionViewModel.setQualityPreset(it) },
                 onContinue = { navController.navigate(Route.NameProject.route) },
                 onBack = { navController.popBackStack() }
             )

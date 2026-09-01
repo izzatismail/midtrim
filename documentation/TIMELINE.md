@@ -488,5 +488,6 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 | 2 | Phase 1 completed: repo structure, CI pipelines, linting configs, pre-commit hooks, .gitignore, data layer stubs | Phase 1 |
 | 3 | Phase 2 completed: all 16 Use Cases implemented per platform (Swift + Kotlin), domain entities, error types, repository/processing/IAP protocols, and 100% unit test coverage for all Use Cases across both platforms. | Phase 2 |
 | 4 | Phase 5 iOS completed: StoreKit 2 integration, StoreKitService, SKTestSession tests, Paywall/HelpSettings wiring, real price display, haptics, privacy/OSS links. Phase 5 at 90% — Android PR #7 merged, iOS PR pending merge. | Phase 5 |
+| 5 | Added paid-tier export quality presets (Small/Balanced/Best) as prerequisite to Phase 6 — `ExportQuality` domain model updated, `ExportQualityPreset` enum added, data mappers with new tier strings (`"paid_720p"`, `"paid_1080p"`, `"paid_original"`), UI quality selector on TrimDurationScreen, and all tests updated on both platforms. | Phase 4/5/6 |
 
 *(Use a simple incrementing sequence number, not a calendar date, consistent with this document's no-fixed-dates approach. Append a new row for each material change to scope, gate criteria, or phase structure — not for routine checkbox/progress updates.)*

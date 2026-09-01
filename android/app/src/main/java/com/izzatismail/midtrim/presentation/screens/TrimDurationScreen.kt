@@ -6,6 +6,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.izzatismail.midtrim.domain.entity.ExportQualityPreset
 import com.izzatismail.midtrim.ui.theme.Spacing
 import com.izzatismail.midtrim.ui.theme.*
 
@@ -14,8 +15,13 @@ import com.izzatismail.midtrim.ui.theme.*
 fun TrimDurationScreen(
     selectedDuration: Double,
     isPaidUser: Boolean,
+    availableQualityPresets: List<ExportQualityPreset>,
+    selectedQualityPreset: ExportQualityPreset,
+    sourceWidth: Int,
+    sourceHeight: Int,
     onDurationSelected: (Double) -> Unit,
     onCustomTap: () -> Unit,
+    onQualityPresetSelected: (ExportQualityPreset) -> Unit,
     onContinue: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier
@@ -101,7 +107,15 @@ fun TrimDurationScreen(
 
             Spacer(modifier = Modifier.height(Spacing.lg))
 
-            QualityBadge(isPaidUser = isPaidUser, onUpgrade = onCustomTap)
+            ExportQualitySelector(
+                isPaidUser = isPaidUser,
+                availablePresets = availableQualityPresets,
+                selectedPreset = selectedQualityPreset,
+                sourceWidth = sourceWidth,
+                sourceHeight = sourceHeight,
+                onPresetSelected = onQualityPresetSelected,
+                onUpgrade = onCustomTap
+            )
 
             Spacer(modifier = Modifier.weight(1f))
 
@@ -118,28 +132,68 @@ fun TrimDurationScreen(
 }
 
 @Composable
-private fun QualityBadge(isPaidUser: Boolean, onUpgrade: () -> Unit) {
-    Surface(
-        onClick = if (isPaidUser) ({}) else onUpgrade,
-        shape = MaterialTheme.shapes.small,
-        color = MaterialTheme.colorScheme.surfaceVariant
-    ) {
-        Row(
-            modifier = Modifier.padding(horizontal = Spacing.md, vertical = Spacing.sm),
-            verticalAlignment = Alignment.CenterVertically
+private fun ExportQualitySelector(
+    isPaidUser: Boolean,
+    availablePresets: List<ExportQualityPreset>,
+    selectedPreset: ExportQualityPreset,
+    sourceWidth: Int,
+    sourceHeight: Int,
+    onPresetSelected: (ExportQualityPreset) -> Unit,
+    onUpgrade: () -> Unit
+) {
+    if (isPaidUser) {
+        Text(
+            text = "Export Quality",
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onBackground
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+            availablePresets.forEach { preset ->
+                val isSelected = preset == selectedPreset
+                Surface(
+                    onClick = { onPresetSelected(preset) },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = MaterialTheme.shapes.small,
+                    color = if (isSelected) MaterialTheme.colorScheme.secondaryContainer
+                    else MaterialTheme.colorScheme.surfaceVariant
+                ) {
+                    Column(
+                        modifier = Modifier.padding(horizontal = Spacing.md, vertical = Spacing.sm)
+                    ) {
+                        Text(
+                            text = preset.label,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = if (isSelected) MaterialTheme.colorScheme.onSecondaryContainer
+                            else MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Text(
+                            text = preset.subtitle(sourceWidth, sourceHeight),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
+                        )
+                    }
+                }
+            }
+        }
+    } else {
+        Surface(
+            onClick = onUpgrade,
+            shape = MaterialTheme.shapes.small,
+            color = MaterialTheme.colorScheme.surfaceVariant
         ) {
-            Text(
-                text = if (isPaidUser) "Original Quality" else "720p",
-                style = MaterialTheme.typography.bodyMedium,
-                color = if (isPaidUser)
-                    MaterialTheme.colorScheme.onSurfaceVariant
-                else
-                    PremiumAccent
-            )
-            if (!isPaidUser) {
+            Row(
+                modifier = Modifier.padding(horizontal = Spacing.md, vertical = Spacing.sm),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "720p",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = PremiumAccent
+                )
                 Spacer(modifier = Modifier.width(Spacing.xs))
                 Text(
-                    text = "🔒",
+                    text = "\uD83D\uDD12",
                     style = MaterialTheme.typography.bodyMedium,
                     color = PremiumAccent
                 )

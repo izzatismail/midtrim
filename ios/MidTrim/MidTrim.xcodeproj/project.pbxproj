@@ -31,6 +31,7 @@
 		70AAA1BC8BF015FBF426192E /* ProjectRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6869BE4DB21399AF300ADB0B /* ProjectRepositoryProtocol.swift */; };
 		73410CA5A6A67241F4F98C8A /* GenerateThumbnailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C475B11A18AD2A273FC8A /* GenerateThumbnailUseCase.swift */; };
 		74FAF65FE6534C7166A7AFB3 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BFC4972C27D9CCF73A425DC /* StoreKit.framework */; };
+		7B29F58CCB156FDB56EA6C4D /* ExportQualityMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAB179F9A4547E81442B59E /* ExportQualityMapper.swift */; };
 		7CAAF648B9A07683984F5E82 /* SwiftDataProjectRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABB0FD02F795F5CFB9D423B /* SwiftDataProjectRepository.swift */; };
 		7F9CAEE614FAE20B57620F54 /* StoreKitServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC09787CA141E660B2A0933C /* StoreKitServiceProtocol.swift */; };
 		80E77995993BD1436EFA3863 /* ReorderVideosUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFA507D65F48F4245BA01D3 /* ReorderVideosUseCase.swift */; };
@@ -39,6 +40,7 @@
 		8ABDE8494E5C63893CC5B61C /* MergeVideoSegmentsUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD0E71AA12352A17D1D77066 /* MergeVideoSegmentsUseCaseTests.swift */; };
 		8C023B1CBBFC0392552F206C /* MidTrimUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FED68176EFCBC605EF503ED0 /* MidTrimUITests.swift */; };
 		9611DE36A6B5BD0AD706D0E7 /* CalculateMergedDurationUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4874638D734E45D07DD0B1 /* CalculateMergedDurationUseCaseTests.swift */; };
+		9A195A9B5550DF0411469F45 /* ExportQualityMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFC67EF50D69A2AB2F3F5CE /* ExportQualityMapperTests.swift */; };
 		A1B2C3D4E5F6000100000001 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A7000200000001 /* Colors.swift */; };
 		A1B2C3D4E5F6000100000002 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A7000200000002 /* Typography.swift */; };
 		A1B2C3D4E5F6000100000003 /* ProjectListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A7000200000003 /* ProjectListViewModel.swift */; };
@@ -117,9 +119,11 @@
 		400B84DFD474F4195A460C7F /* CalculateMergedDurationUseCase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CalculateMergedDurationUseCase.swift; path = MidTrim/Domain/UseCases/CalculateMergedDurationUseCase.swift; sourceTree = "<group>"; };
 		41C2C37D59E4A441833CAF44 /* TrimVideoUseCase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TrimVideoUseCase.swift; path = MidTrim/Domain/UseCases/TrimVideoUseCase.swift; sourceTree = "<group>"; };
 		43402BF7C422B12F8084D444 /* ModelMappers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ModelMappers.swift; path = MidTrim/Data/ModelMappers.swift; sourceTree = "<group>"; };
+		4EAB179F9A4547E81442B59E /* ExportQualityMapper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExportQualityMapper.swift; path = MidTrim/Data/ExportQualityMapper.swift; sourceTree = "<group>"; };
 		4EF59391A3068C54469B5901 /* VideoFileRepositoryProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VideoFileRepositoryProtocol.swift; path = MidTrim/Domain/Protocols/VideoFileRepositoryProtocol.swift; sourceTree = "<group>"; };
 		563CF234566E39F49ADEA15C /* MidTrim_StoreKitConfig.storekit */ = {isa = PBXFileReference; includeInIndex = 1; name = MidTrim_StoreKitConfig.storekit; path = MidTrim_StoreKitConfig.storekit; sourceTree = "<group>"; };
 		567588BDA5CC68E54A5B578E /* MidTrimTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MidTrimTests.swift; sourceTree = "<group>"; };
+		5AFC67EF50D69A2AB2F3F5CE /* ExportQualityMapperTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExportQualityMapperTests.swift; path = MidTrimTests/Data/ExportQualityMapperTests.swift; sourceTree = "<group>"; };
 		5C7C475B11A18AD2A273FC8A /* GenerateThumbnailUseCase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GenerateThumbnailUseCase.swift; path = MidTrim/Domain/UseCases/GenerateThumbnailUseCase.swift; sourceTree = "<group>"; };
 		5DFA507D65F48F4245BA01D3 /* ReorderVideosUseCase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReorderVideosUseCase.swift; path = MidTrim/Domain/UseCases/ReorderVideosUseCase.swift; sourceTree = "<group>"; };
 		638D41770751B21041D784BF /* TrimVideoUseCaseTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TrimVideoUseCaseTests.swift; path = MidTrimTests/Domain/UseCases/TrimVideoUseCaseTests.swift; sourceTree = "<group>"; };
@@ -309,6 +313,8 @@
 				B2C3D4E5F6A700020000000C /* Nunito-SemiBold.ttf */,
 				B2C3D4E5F6A700020000000D /* Nunito-Bold.ttf */,
 				CB6CADE68993B50E00354880 /* Frameworks */,
+				4EAB179F9A4547E81442B59E /* ExportQualityMapper.swift */,
+				5AFC67EF50D69A2AB2F3F5CE /* ExportQualityMapperTests.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -522,6 +528,7 @@
 				3EB84D4F743F1B8752DD75FC /* DefaultVideoFileRepository.swift in Sources */,
 				C12BD03E3AB495C6194F9B01 /* KeychainEntitlementCache.swift in Sources */,
 				6D9CF397E087B8A6F28138A3 /* StoreKitService.swift in Sources */,
+				7B29F58CCB156FDB56EA6C4D /* ExportQualityMapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,6 +553,7 @@
 				8ABDE8494E5C63893CC5B61C /* MergeVideoSegmentsUseCaseTests.swift in Sources */,
 				D23B22F0F83896D109B42EC6 /* IAPUseCaseTests.swift in Sources */,
 				C0A190ACE37E13CFADFD2450 /* StoreKitIntegrationTests.swift in Sources */,
+				9A195A9B5550DF0411469F45 /* ExportQualityMapperTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -702,11 +710,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIAppFonts = (
-					"Nunito-Regular",
-					"Nunito-SemiBold",
-					"Nunito-Bold",
-				);
+				INFOPLIST_KEY_UIAppFonts = "Nunito-Regular Nunito-SemiBold Nunito-Bold";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -737,11 +741,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIAppFonts = (
-					"Nunito-Regular",
-					"Nunito-SemiBold",
-					"Nunito-Bold",
-				);
+				INFOPLIST_KEY_UIAppFonts = "Nunito-Regular Nunito-SemiBold Nunito-Bold";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

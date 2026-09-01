@@ -113,7 +113,7 @@ These represent the platform-agnostic *logic* (implemented natively per platform
 5. **ValidateTrimDurationUseCase** *(new)* — pure function: given a requested `trimDuration` and current entitlement status, returns whether the duration is allowed (free: must be exactly 1, 2, or 3; paid: any value from 1–5 inclusive) — the single source of truth for this rule, called by both the UI (to disable/enable controls) and `TrimVideoUseCase` (to reject invalid requests defensively, never trusting the UI layer alone).
 6. **TrimVideoUseCase** — executes native trim/export operation for a **single** video, outputs a temporary trimmed segment. Delegates to `ValidateTrimDurationUseCase` before proceeding.
 7. **MergeVideoSegmentsUseCase** — takes an ordered list of trimmed segments and concatenates them into a **single output file**, normalizing resolution/frame rate/aspect ratio as needed (see Section 5.1), encoded at the quality level determined by `ResolveExportQualityUseCase`.
-8. **ResolveExportQualityUseCase** *(new)* — pure function: given current entitlement status and the source video's native resolution, returns the target export resolution (free: capped at 720p; paid: source resolution up to the codec's practical limits, no upscaling). Called by `MergeVideoSegmentsUseCase` before encoding.
+8. **ResolveExportQualityUseCase** *(new)* — pure function: given current entitlement status, a user-selected `ExportQualityPreset` (Small/Balanced/Best, or null for free tier), and the source video's native resolution, returns the target export resolution (free: always capped at 720p; paid: maps Small→720p, Balanced→1080p (if source >1080p), Best→full source resolution, never upscaling). Called by `MergeVideoSegmentsUseCase` before encoding.
 9. **GenerateThumbnailUseCase** *(new)* — given the merged output video's URI, extracts a single frame at `t=0` and writes it as a small JPEG, returning the new file's URI. Runs once, immediately after `MergeVideoSegmentsUseCase` succeeds and before `SaveProjectUseCase` persists the project (see Section 5.2 for the full extraction strategy). Deliberately simple: no frame selection logic, no multiple sizes.
 10. **SaveProjectUseCase** — persists project metadata (name, ordered source URIs, merged output URI, **thumbnail URI**, trim duration, **export quality tier used**, timestamp) to local DB.
 11. **FetchProjectsUseCase** — retrieves all saved projects for display on home screen.
@@ -157,7 +157,7 @@ User confirms → TrimVideoUseCase runs once per video (re-validates duration
 Trimmed segments (temporary) produced in confirmed order
         │
         ▼
-ResolveExportQualityUseCase determines target resolution (720p free / source paid)
+ResolveExportQualityUseCase determines target resolution (free: 720p; paid: Small/Balanced/Best preset, default Best)
         │
         ▼
 MergeVideoSegmentsUseCase concatenates segments into a single file at resolved quality
@@ -181,7 +181,7 @@ Home screen refreshed via FetchProjectsUseCase
 ### 5.1 Merge Normalization Strategy
 Since source videos in a single project may differ in resolution, aspect ratio, or frame rate, `MergeVideoSegmentsUseCase` must normalize all trimmed segments to a **consistent output format** before/during concatenation:
 - **Reference format**: derived from the **first video in the confirmed order** (its resolution/aspect ratio/frame rate becomes the target for the merged output), unless native platform guidance suggests a better default (e.g., normalizing to the highest common resolution). This should be validated during implementation and documented once confirmed.
-- The reference resolution is then clamped by `ResolveExportQualityUseCase`'s output — e.g., if the reference video is 4K but the user is on the free tier, the actual encode target is 720p, not 4K.
+- The reference resolution is then clamped by `ResolveExportQualityUseCase`'s output (which now incorporates the user's chosen preset for paid tiers) — e.g., if the reference video is 4K but the user is on the free tier, the actual encode target is 720p, not 4K.
 - iOS: achieved via `AVMutableComposition` + `AVMutableVideoComposition` (applies consistent render size/frame rate across all track segments).
 - Android: achieved via `Media3 Transformer`'s `EditedMediaItemSequence`, applying consistent `Effects`/output configuration across all sequence items.
 - If normalization would cause unacceptable quality loss on non-reference clips, this must be flagged during implementation for product review — not silently degraded.

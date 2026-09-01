@@ -12,7 +12,38 @@ final class MergeVideoSegmentsUseCaseTests: XCTestCase {
         let result = try await useCase.execute(
             segmentURIs: ["s1.mp4", "s2.mp4"],
             isPaidUser: false,
+            qualityPreset: nil,
             sourceResolution: CGSize(width: 1920, height: 1080)
+        )
+        XCTAssertEqual(result, "merged.mp4")
+    }
+
+    func testMergeSuccessWithPaidBESTPreset() async throws {
+        let trimmer = MockVideoTrimmer()
+        let useCase = MergeVideoSegmentsUseCase(
+            trimmer: trimmer,
+            qualityResolver: ResolveExportQualityUseCase()
+        )
+        let result = try await useCase.execute(
+            segmentURIs: ["s1.mp4", "s2.mp4"],
+            isPaidUser: true,
+            qualityPreset: .best,
+            sourceResolution: CGSize(width: 1920, height: 1080)
+        )
+        XCTAssertEqual(result, "merged.mp4")
+    }
+
+    func testMergeSuccessWithPaidSMALLPreset() async throws {
+        let trimmer = MockVideoTrimmer()
+        let useCase = MergeVideoSegmentsUseCase(
+            trimmer: trimmer,
+            qualityResolver: ResolveExportQualityUseCase()
+        )
+        let result = try await useCase.execute(
+            segmentURIs: ["s1.mp4", "s2.mp4"],
+            isPaidUser: true,
+            qualityPreset: .small,
+            sourceResolution: CGSize(width: 3840, height: 2160)
         )
         XCTAssertEqual(result, "merged.mp4")
     }
@@ -27,6 +58,7 @@ final class MergeVideoSegmentsUseCaseTests: XCTestCase {
             _ = try await useCase.execute(
                 segmentURIs: [],
                 isPaidUser: false,
+                qualityPreset: nil,
                 sourceResolution: CGSize(width: 1920, height: 1080)
             )
             XCTFail("Expected error")
@@ -39,7 +71,7 @@ final class MergeVideoSegmentsUseCaseTests: XCTestCase {
         }
     }
 
-    func testSingleSegment() async throws {
+    func testSingleSegmentWithPaidTier() async throws {
         let trimmer = MockVideoTrimmer()
         let useCase = MergeVideoSegmentsUseCase(
             trimmer: trimmer,
@@ -48,6 +80,7 @@ final class MergeVideoSegmentsUseCaseTests: XCTestCase {
         let result = try await useCase.execute(
             segmentURIs: ["s1.mp4"],
             isPaidUser: true,
+            qualityPreset: .best,
             sourceResolution: CGSize(width: 3840, height: 2160)
         )
         XCTAssertEqual(result, "merged.mp4")

@@ -2,14 +2,19 @@ name: iOS CI
 
 on:
   push:
-    branches: ["feat/**", "fix/**", "chore/**"]
+    branches: ["main"]
     paths: ["ios/**"]
   pull_request:
     branches: ["main"]
     paths: ["ios/**"]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-and-test:
+    if: github.event_name == 'pull_request'
     runs-on: macos-14
     defaults:
       run:
@@ -35,3 +40,19 @@ jobs:
         with:
           name: ios-test-results
           path: ios/TestResults.xcresult
+
+  build-only:
+    if: github.event_name == 'push'
+    runs-on: macos-14
+    defaults:
+      run:
+        working-directory: ios
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_15.4.app
+      - name: Build
+        run: xcodebuild build \
+          -project MidTrim/MidTrim.xcodeproj \
+          -scheme MidTrim \
+          -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest'

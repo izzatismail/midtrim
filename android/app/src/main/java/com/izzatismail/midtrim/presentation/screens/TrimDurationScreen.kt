@@ -11,7 +11,7 @@ import com.izzatismail.midtrim.domain.entity.ExportQualityPreset
 import com.izzatismail.midtrim.presentation.viewmodel.VideoSelectionViewModel
 import com.izzatismail.midtrim.ui.theme.Spacing
 import com.izzatismail.midtrim.ui.theme.*
-import kotlin.math.roundToInt
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -71,7 +71,7 @@ fun TrimDurationScreen(
             ) {
                 durations.forEach { duration ->
                     FilterChip(
-                        selected = selectedDuration == duration,
+                        selected = selectedDuration == duration && !isCustomOptionSelected,
                         onClick = { onDurationSelected(duration) },
                         label = {
                             Text("${duration.toInt()}s")

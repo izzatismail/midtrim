@@ -134,19 +134,8 @@ class VideoSelectionViewModel(
     }
 
     fun selectCustomMode() {
-        val value = DEFAULT_CUSTOM_DURATION
-        if (validateTrimDurationUseCase.isAllowed(value, _uiState.value.isPaidUser)) {
-            val merged = calculateMergedDurationUseCase.execute(
-                value, _uiState.value.selectedVideos.size
-            )
-            _uiState.value = _uiState.value.copy(
-                trimDuration = value,
-                mergedDuration = merged,
-                isCustomDurationSelected = true,
-                customDurationValue = value,
-                wasCustomDuration = true
-            )
-        }
+        setCustomDuration(DEFAULT_CUSTOM_DURATION)
+        _uiState.value = _uiState.value.copy(isCustomDurationSelected = true)
     }
 
     fun setCustomDuration(value: Double) {

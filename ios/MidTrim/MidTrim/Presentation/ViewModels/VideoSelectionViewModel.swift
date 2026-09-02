@@ -95,20 +95,8 @@ class VideoSelectionViewModel: ObservableObject {
     }
 
     func selectCustomMode() {
-        let value = Self.defaultCustomDuration
-        guard validateTrimDurationUseCase.isAllowed(
-            trimDuration: value,
-            isPaidUser: uiState.isPaidUser
-        ) else { return }
-        let merged = calculateMergedDurationUseCase.execute(
-            trimDuration: value,
-            videoCount: uiState.selectedVideos.count
-        )
-        uiState.trimDuration = value
-        uiState.mergedDuration = merged
+        setCustomDuration(Self.defaultCustomDuration)
         uiState.isCustomDurationSelected = true
-        uiState.customDurationValue = value
-        uiState.wasCustomDuration = true
     }
 
     func setCustomDuration(_ value: Double) {

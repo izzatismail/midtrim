@@ -24,7 +24,10 @@ data class VideoSelectionUiState(
     val selectedQualityPreset: ExportQualityPreset = ExportQualityPreset.BEST,
     val availableQualityPresets: List<ExportQualityPreset> = emptyList(),
     val sourceWidth: Int = 1920,
-    val sourceHeight: Int = 1080
+    val sourceHeight: Int = 1080,
+    val isCustomDurationSelected: Boolean = false,
+    val customDurationValue: Double = VideoSelectionViewModel.DEFAULT_CUSTOM_DURATION,
+    val wasCustomDuration: Boolean = false
 )
 
 class VideoSelectionViewModel(
@@ -34,6 +37,13 @@ class VideoSelectionViewModel(
     private val validateTrimDurationUseCase: ValidateTrimDurationUseCase,
     private val fetchEntitlementStatusUseCase: FetchEntitlementStatusUseCase
 ) : ViewModel() {
+
+    companion object {
+        const val DEFAULT_CUSTOM_DURATION = 3.0
+        const val CUSTOM_DURATION_MIN = 1.0
+        const val CUSTOM_DURATION_MAX = 5.0
+        const val CUSTOM_DURATION_STEP = 0.1
+    }
 
     private val _uiState = MutableStateFlow(VideoSelectionUiState())
     val uiState: StateFlow<VideoSelectionUiState> = _uiState.asStateFlow()
@@ -116,7 +126,30 @@ class VideoSelectionViewModel(
             )
             _uiState.value = _uiState.value.copy(
                 trimDuration = duration,
-                mergedDuration = merged
+                mergedDuration = merged,
+                isCustomDurationSelected = false,
+                wasCustomDuration = false
+            )
+        }
+    }
+
+    fun selectCustomMode() {
+        setCustomDuration(DEFAULT_CUSTOM_DURATION)
+        _uiState.value = _uiState.value.copy(isCustomDurationSelected = true)
+    }
+
+    fun setCustomDuration(value: Double) {
+        val clamped = value.coerceIn(CUSTOM_DURATION_MIN, CUSTOM_DURATION_MAX)
+        val rounded = kotlin.math.round(clamped / CUSTOM_DURATION_STEP) * CUSTOM_DURATION_STEP
+        if (validateTrimDurationUseCase.isAllowed(rounded, _uiState.value.isPaidUser)) {
+            val merged = calculateMergedDurationUseCase.execute(
+                rounded, _uiState.value.selectedVideos.size
+            )
+            _uiState.value = _uiState.value.copy(
+                trimDuration = rounded,
+                mergedDuration = merged,
+                customDurationValue = rounded,
+                wasCustomDuration = true
             )
         }
     }

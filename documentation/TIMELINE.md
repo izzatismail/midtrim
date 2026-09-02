@@ -266,7 +266,7 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 ---
 
 ## Phase 6: Video Processing — Trim & Merge
-**Status:** `Not Started` | **Current Progress:** 0%
+**Status:** `In Progress` | **Current Progress:** 5%
 
 ### Deliverables
 
@@ -310,7 +310,8 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 *Governing rules for this phase: RULES.md §3 (native development rules), §4 (no partial/silent merges).*
 
 ### Blockers / Notes
-- Paid-tier "Custom" trim duration is currently hardcoded to 4.0s in both platforms' navigation wiring (`MainActivity.kt` and `ContentView.swift`). This was a Phase 4 stub that was never replaced with a proper stepper/input per DESIGN.md §6.3. **Must be fixed in Phase 6** — paid users must be able to select any duration 1.0–5.0s.
+- ~~Paid-tier "Custom" trim duration is currently hardcoded to 4.0s in both platforms' navigation wiring (`MainActivity.kt` and `ContentView.swift`). This was a Phase 4 stub that was never replaced with a proper stepper/input per DESIGN.md §6.3. **Must be fixed in Phase 6** — paid users must be able to select any duration 1.0–5.0s.~~
+- ✅ **Resolved:** Custom trim duration stepper (0.1s increments, 1.0–5.0s range) implemented on both platforms with `isCustomDurationSelected`/`wasCustomDuration` tracking in UI state. Hardcoded `4.0` value removed.
 
 ---
 
@@ -436,7 +437,7 @@ MidTrim MVP development is organized into **8 sequential phases**, each with cle
 | 3. Data | Complete | 100% | Integration tests pass; 3 items blocked on Phase 6 |
 | 4. UI | In Progress | 80% | Critical flow works |
 | 5. In-App Purchase & Entitlement | In Progress | 90% | Test purchase/restore unlocks features |
-| 6. Video Processing | Not Started | 0% | Playable output, perf OK, quality tiers verified |
+| 6. Video Processing | In Progress | 5% | Blocker resolved — custom trim stepper implemented |
 | 7. Design Polish | Not Started | 0% | Accessibility audit pass |
 | 8. Beta Testing | Not Started | 0% | Zero crashes, 99.5% success, real IAP verified |
 | 9. Pre-Release | Not Started | 0% | Metadata ready, signed, IAP product configured |

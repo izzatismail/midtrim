@@ -5,28 +5,35 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.izzatismail.midtrim.domain.entity.ExportQualityPreset
+import com.izzatismail.midtrim.presentation.viewmodel.VideoSelectionViewModel
 import com.izzatismail.midtrim.ui.theme.Spacing
 import com.izzatismail.midtrim.ui.theme.*
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrimDurationScreen(
     selectedDuration: Double,
     isPaidUser: Boolean,
+    isCustomSelected: Boolean,
+    customDuration: Double,
     availableQualityPresets: List<ExportQualityPreset>,
     selectedQualityPreset: ExportQualityPreset,
     sourceWidth: Int,
     sourceHeight: Int,
     onDurationSelected: (Double) -> Unit,
     onCustomTap: () -> Unit,
+    onCustomDurationChanged: (Double) -> Unit,
     onQualityPresetSelected: (ExportQualityPreset) -> Unit,
     onContinue: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val durations = listOf(1.0, 2.0, 3.0)
+    val isCustomOptionSelected = isCustomSelected && isPaidUser
 
     Scaffold(
         topBar = {
@@ -85,21 +92,33 @@ fun TrimDurationScreen(
                 else
                     MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
             ) {
-                Row(
-                    modifier = Modifier.padding(Spacing.md),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+                Column(
+                    modifier = Modifier.padding(Spacing.md)
                 ) {
-                    Text(
-                        text = if (isPaidUser) "Custom" else "Custom",
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = if (isPaidUser) MaterialTheme.colorScheme.onSurface else PremiumAccent
-                    )
-                    if (!isPaidUser) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
                         Text(
-                            text = " 🔒",
+                            text = if (isCustomOptionSelected) "Custom  ·  ${"%.1f".format(customDuration)}s" else "Custom",
                             style = MaterialTheme.typography.bodyLarge,
-                            color = PremiumAccent
+                            color = if (isPaidUser) MaterialTheme.colorScheme.onSurface else PremiumAccent
+                        )
+                        if (!isPaidUser) {
+                            Text(
+                                text = " \uD83D\uDD12",
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = PremiumAccent
+                            )
+                        }
+                    }
+
+                    if (isCustomOptionSelected) {
+                        Spacer(modifier = Modifier.height(Spacing.sm))
+                        CustomDurationStepper(
+                            value = customDuration,
+                            onValueChanged = onCustomDurationChanged
                         )
                     }
                 }
@@ -198,6 +217,52 @@ private fun ExportQualitySelector(
                     color = PremiumAccent
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun CustomDurationStepper(
+    value: Double,
+    onValueChanged: (Double) -> Unit
+) {
+    val min = VideoSelectionViewModel.CUSTOM_DURATION_MIN
+    val max = VideoSelectionViewModel.CUSTOM_DURATION_MAX
+    val step = VideoSelectionViewModel.CUSTOM_DURATION_STEP
+
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ) {
+        FilledIconButton(
+            onClick = { onValueChanged(value - step) },
+            enabled = value - step >= min - 0.001
+        ) {
+            Text("-", style = MaterialTheme.typography.titleMedium)
+        }
+
+        Spacer(modifier = Modifier.width(Spacing.md))
+
+        Surface(
+            shape = MaterialTheme.shapes.small,
+            color = MaterialTheme.colorScheme.surfaceVariant
+        ) {
+            Text(
+                text = "%.1fs".format(value),
+                modifier = Modifier.padding(horizontal = Spacing.lg, vertical = Spacing.sm),
+                style = MaterialTheme.typography.titleMedium,
+                textAlign = TextAlign.Center
+            )
+        }
+
+        Spacer(modifier = Modifier.width(Spacing.md))
+
+        FilledIconButton(
+            onClick = { onValueChanged(value + step) },
+            enabled = value + step <= max + 0.001
+        ) {
+            Text("+", style = MaterialTheme.typography.titleMedium)
         }
     }
 }

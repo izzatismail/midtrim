@@ -3,17 +3,23 @@ import SwiftUI
 struct TrimDurationScreen: View {
     let selectedDuration: Double
     let isPaidUser: Bool
+    let isCustomSelected: Bool
+    let customDuration: Double
     let availablePresets: [ExportQualityPreset]
     let selectedPreset: ExportQualityPreset
     let sourceWidth: Int
     let sourceHeight: Int
     let onDurationSelected: (Double) -> Void
     let onCustomTap: () -> Void
+    let onCustomDurationChanged: (Double) -> Void
     let onQualityPresetSelected: (ExportQualityPreset) -> Void
     let onContinue: () -> Void
     let onBack: () -> Void
 
     private let durations: [Double] = [1.0, 2.0, 3.0]
+    private let step = VideoSelectionViewModel.customDurationStep
+    private let minVal = VideoSelectionViewModel.customDurationMin
+    private let maxVal = VideoSelectionViewModel.customDurationMax
 
     var body: some View {
         VStack(spacing: AppSpacing.lg) {
@@ -23,22 +29,41 @@ struct TrimDurationScreen: View {
                     Button { onDurationSelected(duration) } label: {
                         Text("\(Int(duration))s").font(.buttonLabel).frame(maxWidth: .infinity)
                             .padding(.vertical, AppSpacing.sm)
-                            .background(selectedDuration == duration ? Color.accentPrimary : Color.bgSurface)
-                            .foregroundColor(selectedDuration == duration ? .textPrimary : .textSecondary)
+                            .background(selectedDuration == duration && !isCustomSelected
+                                ? Color.accentPrimary : Color.bgSurface)
+                            .foregroundColor(selectedDuration == duration && !isCustomSelected
+                                ? .textPrimary : .textSecondary)
                             .cornerRadius(AppSpacing.cornerButton)
                     }
                 }
             }
             .padding(.horizontal, AppSpacing.md)
             Button(action: onCustomTap) {
-                HStack {
-                    Text("Custom").font(.bodyLarge)
-                    if !isPaidUser { Text("🔒") }
+                VStack(spacing: AppSpacing.sm) {
+                    HStack {
+                        if isCustomSelected && isPaidUser {
+                            Text("Custom  ·  \(String(format: "%.1f", customDuration))s").font(.bodyLarge)
+                        } else {
+                            Text("Custom").font(.bodyLarge)
+                        }
+                        if !isPaidUser { Text("🔒") }
+                    }
+                    .frame(maxWidth: .infinity).padding(AppSpacing.md)
+                    .background(isPaidUser ? Color.bgElevated : Color.bgSurface.opacity(0.5))
+                    .foregroundColor(isPaidUser ? .textPrimary : .premiumAccent)
+                    .cornerRadius(AppSpacing.cornerButton)
+
+                    if isCustomSelected && isPaidUser {
+                        CustomDurationStepper(
+                            value: customDuration,
+                            step: step,
+                            range: minVal...maxVal,
+                            onChange: onCustomDurationChanged
+                        )
+                        .padding(.horizontal, AppSpacing.md)
+                        .padding(.bottom, AppSpacing.sm)
+                    }
                 }
-                .frame(maxWidth: .infinity).padding(AppSpacing.md)
-                .background(isPaidUser ? Color.bgElevated : Color.bgSurface.opacity(0.5))
-                .foregroundColor(isPaidUser ? .textPrimary : .premiumAccent)
-                .cornerRadius(AppSpacing.cornerButton)
             }
             .padding(.horizontal, AppSpacing.md)
             qualitySelector
@@ -93,5 +118,38 @@ struct TrimDurationScreen: View {
                 .cornerRadius(AppSpacing.cornerButton)
             }
         }
+    }
+}
+
+struct CustomDurationStepper: View {
+    let value: Double
+    let step: Double
+    let range: ClosedRange<Double>
+    let onChange: (Double) -> Void
+
+    var body: some View {
+        HStack(spacing: AppSpacing.sm) {
+            Button { onChange(value - step) } label: {
+                Image(systemName: "minus")
+                    .font(.title3)
+                    .frame(width: 44, height: 44)
+            }
+            .disabled(value - step < range.lowerBound - 0.001)
+            .buttonStyle(.bordered)
+
+            Text(String(format: "%.1fs", value))
+                .font(.title2.bold())
+                .frame(minWidth: 60)
+                .multilineTextAlignment(.center)
+
+            Button { onChange(value + step) } label: {
+                Image(systemName: "plus")
+                    .font(.title3)
+                    .frame(width: 44, height: 44)
+            }
+            .disabled(value + step > range.upperBound + 0.001)
+            .buttonStyle(.bordered)
+        }
+        .padding(.vertical, AppSpacing.xs)
     }
 }
